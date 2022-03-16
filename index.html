@@ -284,7 +284,32 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-                    
+                    <h2 id="BOM-Browser-Object-Model"><a href="#BOM-Browser-Object-Model" class="headerlink" title="BOM(Browser Object Model)"></a>BOM(Browser Object Model)</h2><h3 id="Navigator对象"><a href="#Navigator对象" class="headerlink" title="Navigator对象"></a>Navigator对象</h3><pre><code>包含了有关浏览器的信息(包括浏览器的代码名，名称，平台和版本信息等)
+</code></pre>
+<h3 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h3><pre><code>获取屏幕信息 
+</code></pre>
+<h3 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h3><pre><code>location提供了当前窗口中加载的文档有关的信息，还提供了一些导航功能。location对象既是window对象的属性，又是document对象的属性。location还可以将Url解析为独立的片段，我们可以通过不同的属性去访问这些片段
+</code></pre>
+<h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><pre><code>history对象上保留着用户上网的历史记录，使用go（）方法可以在用户的历史纪录中任意跳转
+</code></pre>
+<h2 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h2><pre><code>根据同源策略
+
+Ajax请求时，浏览器要求当前网页和server必须同源(安全)
+同源的定义：协议、域名、端口三者必须相同
+加载图片css js可无视同源策略
+
+跨域
+
+所有的跨域，都必须经过server端允许和配合
+未经server端允许就实现跨域，说明浏览器有漏洞，危险信号
+
+解决跨域问题的方法
+
+Vue中使用配置proxy的方法解决问题，其原理时：将域名发送给本地的服务器(启动vue项目的服务)，再由本地的服务器去请求真正的服务器
+在proxy中设置要访问的地址，并重写/api为空的字符串
+在创建axios实力的时候将baseUrl设置为/api
+</code></pre>
+
                       
 
                         
@@ -292,6 +317,17 @@
         <div class="article-info article-info-index">
           
               
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">复习总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
                 
 
                   
@@ -427,7 +463,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-            <h1 id="数据结构和算法的学习-第一天"><a href="#数据结构和算法的学习-第一天" class="headerlink" title="数据结构和算法的学习(第一天)"></a>数据结构和算法的学习(第一天)</h1>
+            <h1 id="数据结构和算法的学习"><a href="#数据结构和算法的学习" class="headerlink" title="数据结构和算法的学习"></a>数据结构和算法的学习</h1>
               
                 <a class="article-more-a" href="/2022/03/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0/#more">
                   more >>
@@ -662,6 +698,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">

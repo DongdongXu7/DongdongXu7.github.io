@@ -8,18 +8,23 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>数据结构与算法的学习 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="数据结构和算法的学习(第一天)">
+  <meta name="description" content="数据结构和算法的学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构与算法的学习">
 <meta property="og:url" content="http://example.com/2022/03/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="数据结构和算法的学习(第一天)">
+<meta property="og:description" content="数据结构和算法的学习">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200806185805576.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200920221638903.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200806190304693.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200806190511967.png">
 <meta property="article:published_time" content="2022-03-08T01:26:10.000Z">
-<meta property="article:modified_time" content="2022-03-10T14:10:53.141Z">
+<meta property="article:modified_time" content="2022-03-16T03:19:21.586Z">
 <meta property="article:author" content="Mr.Xu">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200806185805576.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -201,14 +206,148 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-                    <h1 id="数据结构和算法的学习-第一天"><a href="#数据结构和算法的学习-第一天" class="headerlink" title="数据结构和算法的学习(第一天)"></a>数据结构和算法的学习(第一天)</h1><span id="more"></span>
+                    <h1 id="数据结构和算法的学习"><a href="#数据结构和算法的学习" class="headerlink" title="数据结构和算法的学习"></a>数据结构和算法的学习</h1><span id="more"></span>
 <h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><pre><code>常数操作数量的一个指标，取高阶项
 评价一个算法流程的好坏，先看时间复杂度的指标，再分析不同数据样本下的实际运行时间
 </code></pre>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><pre><code>堆结构就是用数组实现的完全二叉树结构
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><pre><code> 当我们遇到要快速判断一个元素是否出现在集合中时，考虑使用哈希法
+
+ 三种哈希结构
+ 数组
+ set(集合)
+ map(映射)
+
+ Set中的方法(存储的值都是不重复的)
+
+    has():查找元素
+        let set=new Set()
+        set.has(item)
+
+    delete():删除元素
+        set.delete(item)
+        不需要索引下标，直接根据值进行删除
+
+    add():插入元素
+        set.add(item)
+        跟在已有的数值后面
+    
+    size 获取set的长度
+    clear 清楚set中所有元素
+
+遍历方法：
+    keys()返回该Set对象键名的遍历器，等同values()
+
+    values()    返回该Set对象键值的遍历器，等同keys()
+    
+    forEach((value,key,_set))   使用回调函数遍历该Set对象的每个元素,可以输出键值，键名，set对象
+
+Map()中的方法(存储键名值,Map其实的主要用途也是用于存储数据的)
+
+    size：返回Map中所包含的元素个数
+
+    set(key, val): 向字典中添加新元素
+
+    get(key):通过键值查找特定的数值并返回
+
+    has(key):如果键存在字典中返回true,否则false
+
+    delete(key): 通过键值从字典中移除对应的数据
+
+    clear():将这个字典中的所有元素删除
+
+遍历方法：
+
+    keys():将字典中包含的所有键名以数组形式返回
+
+    values():将字典中包含的所有数值以数组形式返回
+
+    forEach()：遍历字典的所有成员
+</code></pre>
+<h2 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h2><pre><code>栈(stack)
+
+先进后出
+栈不是容器，属于容器适配器，不提供迭代器
+
+
+队列(queue)
+
+先进先出，不提供迭代器,只能在前端删除，后端添加
+
+
+JS中使用数组来模拟栈和堆
+使用
+
+push()和pop()方法来模拟栈的输入和输出
+
+push()向数组末尾添加项，并返回修改后数组的长度
+pop()从数组末尾一处最后一项，减少数组长度，并返回移除的项
+
+shift()和push()方法来模拟队列的输出输入
+shift()移除数组中第一个项，并返回移除的项，数组长度减一
+push()向数组末尾添加项，并返回修改后数组的长度
+
+unshift()和pop()来模拟队列的反方向
+unshift()在数组前端添加一个项，并返回数组的长度
+pop()从数组末尾一处最后一项，减少数组长度，并返回移除的项
+</code></pre>
+<h2 id="二叉树与堆"><a href="#二叉树与堆" class="headerlink" title="二叉树与堆"></a>二叉树与堆</h2><pre><code>二叉树
+解题过程中主要的两种形式：满二叉树和完全二叉树
+
+满二叉树
+    一棵二叉树只有度为0的结点和度为2的结点，并且度为0的结点在同一层上，这棵树就是满二叉树
+
+    深度为k(自我理解为层数)的满二叉树，其结点有2*k-1个
+</code></pre>
+<div align=center>
+    <img src="https://img-blog.csdnimg.cn/20200806185805576.png"/>
+</div>
+
+<pre><code>完全二叉树
+    除了底层可能没有填满，其余每层节点数都达到最大值，并且最下一层的结点都分布在该层最左侧的若干位置。若底层为h，则该层包含1~2*h-1个结点
+</code></pre>
+<div align=center>
+    <img src="https://img-blog.csdnimg.cn/20200920221638903.png"/>
+</div>
+
+<pre><code>二叉搜素树
+    是一个有数值的二叉树，一个有序树
+
+    若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+    若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+    它的左、右子树也分别为二叉排序树
+</code></pre>
+<div align=center>
+    <img src="https://img-blog.csdnimg.cn/20200806190304693.png"/>
+</div>
+
+<pre><code>平衡二叉搜索树
+    被称为AVL树，性质：它是一颗空树或它的左右两个子树的高度差的绝对值不超过1，并且左右子树都是平衡二叉树
+</code></pre>
+<div align=center>
+    <img src="https://img-blog.csdnimg.cn/20200806190511967.png"/>
+</div>
+
+<pre><code>最后一棵不是平衡二叉树，因为它的左右两个子树的高度差的绝对值超过了1。
+
+
+二叉树的存储方式
+可以是链式存储(指针)，也可以是顺序存储(数组)
+
+二叉树的遍历方式
+
+
+堆
+是一棵完全二叉树，树种的每个结点的值都不小于(或大于)其左右孩子的值。如果父节点大于左右孩子就是大顶堆，小于等于左右孩子就是小顶堆。
+
+堆结构就是用数组实现的完全二叉树结构
 
 二叉树的排序：[左]=2*i+1;[右]=2*i+2 其中i为开始排序的层数（类似数组的下标取值） 其父元素=(i-1)/2(向下取整)
 </code></pre>
+<div align=center>
+    <img src=""/>
+</div>
+
+
 
                       
 
@@ -363,7 +502,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.</span> <span class="toc-text">数据结构和算法的学习(第一天)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">堆</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">数据结构和算法的学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97"><span class="toc-number">1.4.</span> <span class="toc-text">栈与队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%8E%E5%A0%86"><span class="toc-number">1.5.</span> <span class="toc-text">二叉树与堆</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -486,6 +625,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">

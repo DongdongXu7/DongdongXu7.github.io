@@ -8,14 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>前端知识点复习 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="BOM(Browser Object Model)Navigator对象包含了有关浏览器的信息(包括浏览器的代码名，名称，平台和版本信息等)  Screen获取屏幕信息   Locationlocation提供了当前窗口中加载的文档有关的信息，还提供了一些导航功能。location对象既是window对象的属性，又是document对象的属性。location还可以将Url解析为独立的片段，我们可">
+<meta property="og:type" content="article">
 <meta property="og:title" content="前端知识点复习">
 <meta property="og:url" content="http://example.com/2022/03/11/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="BOM(Browser Object Model)Navigator对象包含了有关浏览器的信息(包括浏览器的代码名，名称，平台和版本信息等)  Screen获取屏幕信息   Locationlocation提供了当前窗口中加载的文档有关的信息，还提供了一些导航功能。location对象既是window对象的属性，又是document对象的属性。location还可以将Url解析为独立的片段，我们可">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-11T00:28:17.000Z">
-<meta property="article:modified_time" content="2022-03-11T00:28:17.861Z">
+<meta property="article:modified_time" content="2022-03-11T02:16:02.684Z">
 <meta property="article:author" content="Mr.Xu">
+<meta property="article:tag" content="复习总结">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -198,7 +201,32 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-                    
+                    <h2 id="BOM-Browser-Object-Model"><a href="#BOM-Browser-Object-Model" class="headerlink" title="BOM(Browser Object Model)"></a>BOM(Browser Object Model)</h2><h3 id="Navigator对象"><a href="#Navigator对象" class="headerlink" title="Navigator对象"></a>Navigator对象</h3><pre><code>包含了有关浏览器的信息(包括浏览器的代码名，名称，平台和版本信息等)
+</code></pre>
+<h3 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h3><pre><code>获取屏幕信息 
+</code></pre>
+<h3 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h3><pre><code>location提供了当前窗口中加载的文档有关的信息，还提供了一些导航功能。location对象既是window对象的属性，又是document对象的属性。location还可以将Url解析为独立的片段，我们可以通过不同的属性去访问这些片段
+</code></pre>
+<h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><pre><code>history对象上保留着用户上网的历史记录，使用go（）方法可以在用户的历史纪录中任意跳转
+</code></pre>
+<h2 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h2><pre><code>根据同源策略
+
+Ajax请求时，浏览器要求当前网页和server必须同源(安全)
+同源的定义：协议、域名、端口三者必须相同
+加载图片css js可无视同源策略
+
+跨域
+
+所有的跨域，都必须经过server端允许和配合
+未经server端允许就实现跨域，说明浏览器有漏洞，危险信号
+
+解决跨域问题的方法
+
+Vue中使用配置proxy的方法解决问题，其原理时：将域名发送给本地的服务器(启动vue项目的服务)，再由本地的服务器去请求真正的服务器
+在proxy中设置要访问的地址，并重写/api为空的字符串
+在创建axios实力的时候将baseUrl设置为/api
+</code></pre>
+
                       
 
                         
@@ -239,6 +267,17 @@
         <div class="article-info article-info-index">
           
               
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">复习总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
                 
 
                   
@@ -332,7 +371,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BOM-Browser-Object-Model"><span class="toc-number">1.</span> <span class="toc-text">BOM(Browser Object Model)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Navigator%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.</span> <span class="toc-text">Navigator对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Screen"><span class="toc-number">1.2.</span> <span class="toc-text">Screen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Location"><span class="toc-number">1.3.</span> <span class="toc-text">Location</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#History"><span class="toc-number">1.4.</span> <span class="toc-text">History</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">跨域问题</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -455,6 +494,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
