@@ -284,66 +284,13 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-                    <h2 id="Vue电商项目"><a href="#Vue电商项目" class="headerlink" title="Vue电商项目"></a>Vue电商项目</h2><h3 id="mock"><a href="#mock" class="headerlink" title="mock"></a>mock</h3><pre><code>mock数据不会和服务器进行任何通信，只在自己的项目中运行
-安装mock依赖
-使用步骤
-    在src中创建一个mock文件夹
-    在mock文件夹中创建JSON文件，文件内容格式为JSON格式
-    把mock数据需要的图片安放到public文件夹中
-    开始mock虚拟数据，创建mockServe.js通过mockjs插件实现模拟数据
-    Mock.mock(&quot;请求地址&quot;，&#123;请求数据code：200，data：数据&#125;)
-    将mockServe.js在入口文件处引入（至少需要执行一次，才能模拟数据）
-
-    需在API中重新重新创建mock数据的请求文件，直接将已有的请求文件中的地址改为/mock
-
-wekpack默认对外暴露的:图片、JSON数据格式
-</code></pre>
-<h3 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h3><pre><code>轮播图使用swiper插件来完成
-解决mounted页面挂载完毕后，swiper无法获取轮播图图片数据，实现轮播效果(vuex中时异步任务，若直接将轮播操作放在mounted中，轮播的数据无法获取到)
-
-(1)在mounted中使用延迟器（setTimeout，等2秒后执行swiper的轮播操作）(不完美，会有延迟的时间)
-
-(2)使用watch监听数据变化+$nextTick，
-    对象写法：需使用handler(newValue,oldValue)&#123;
-        此时只能保证已经有数据了，但不能保证数据执行结束
-    &#125;
-
-   $nextTick(回调函数)将回调函数延迟到DOM更新循环后执行。在修改数据后立即执行它，然后等待DOM更新
-</code></pre>
-<h3 id="组件通信方式"><a href="#组件通信方式" class="headerlink" title="组件通信方式"></a>组件通信方式</h3><pre><code>props: 用于父子组件通信
-自定义事件：@on @emit 可以实现子给父通信
-全局事件总线:$bus  全能
-pubsub-js：vue中几乎不用 全能
-插槽
-vuex
-</code></pre>
-<h3 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h3><pre><code>getter作用
-    为了简化仓库中的数据(state)
-</code></pre>
-<h3 id="Search组件中"><a href="#Search组件中" class="headerlink" title="Search组件中"></a>Search组件中</h3><pre><code>将获取到的搜索数据，交给后端
-ES6中新增语法，合并对象Object.assign
-
-面包屑:
-带给服务器的参数可有可无的:如果属性值为空的字符串还是会把相应的字段带给服务器
-但将相应的的字段变为undefined，当前这个字段不会带给服务器
-
-动态开发面包屑中的关键字
-1.当面包屑的关键字清除后，需要让兄弟组件中的对应的关键字也清除
-涉及到兄弟组件之间的通信
-全局事件总线
-$bus
-配置
-    在main()中添加Vue.prototype.$bus=this
-
-    接着在自身组件中通知兄弟清楚关键字
-    this.$bus.$emit(&quot;事件名&quot;)
-
-    在兄弟组件中
-    this.$bus.$on(&quot;事件名&quot;,()=&gt;&#123;&#125;)
-</code></pre>
-<p>$\color</p>
-
-                      
+            <h1 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h1>
+              
+                <a class="article-more-a" href="/2022/03/16/%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/#more">
+                  more >>
+                </a>
+                
+                  
 
                         
         </div>
@@ -408,33 +355,13 @@ $bus
       
         <div class="article-entry" itemprop="articleBody">
           
-                    <h2 id="BOM-Browser-Object-Model"><a href="#BOM-Browser-Object-Model" class="headerlink" title="BOM(Browser Object Model)"></a>BOM(Browser Object Model)</h2><h3 id="Navigator对象"><a href="#Navigator对象" class="headerlink" title="Navigator对象"></a>Navigator对象</h3><pre><code>包含了有关浏览器的信息(包括浏览器的代码名，名称，平台和版本信息等)
-</code></pre>
-<h3 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h3><pre><code>获取屏幕信息 
-</code></pre>
-<h3 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h3><pre><code>location提供了当前窗口中加载的文档有关的信息，还提供了一些导航功能。location对象既是window对象的属性，又是document对象的属性。location还可以将Url解析为独立的片段，我们可以通过不同的属性去访问这些片段
-</code></pre>
-<h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><pre><code>history对象上保留着用户上网的历史记录，使用go（）方法可以在用户的历史纪录中任意跳转
-</code></pre>
-<h2 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h2><pre><code>根据同源策略
-
-Ajax请求时，浏览器要求当前网页和server必须同源(安全)
-同源的定义：协议、域名、端口三者必须相同
-加载图片css js可无视同源策略
-
-跨域
-
-所有的跨域，都必须经过server端允许和配合
-未经server端允许就实现跨域，说明浏览器有漏洞，危险信号
-
-解决跨域问题的方法
-
-Vue中使用配置proxy的方法解决问题，其原理时：将域名发送给本地的服务器(启动vue项目的服务)，再由本地的服务器去请求真正的服务器
-在proxy中设置要访问的地址，并重写/api为空的字符串
-在创建axios实力的时候将baseUrl设置为/api
-</code></pre>
-
-                      
+            <h1 id="前端知识点复习"><a href="#前端知识点复习" class="headerlink" title="前端知识点复习"></a>前端知识点复习</h1>
+              
+                <a class="article-more-a" href="/2022/03/11/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/#more">
+                  more >>
+                </a>
+                
+                  
 
                         
         </div>
@@ -821,11 +748,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
