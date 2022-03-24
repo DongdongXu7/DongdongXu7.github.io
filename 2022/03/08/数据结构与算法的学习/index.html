@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200806190511967.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200806191109896.png">
 <meta property="article:published_time" content="2022-03-08T01:26:10.000Z">
-<meta property="article:modified_time" content="2022-03-20T11:53:35.291Z">
+<meta property="article:modified_time" content="2022-03-24T09:28:52.292Z">
 <meta property="article:author" content="Mr.Xu">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary">
@@ -374,8 +374,9 @@ pop()从数组末尾一处最后一项，减少数组长度，并返回移除的
     迭代方法
 
 
-    
-
+前序和中序可以唯一确定的一棵二叉树
+中序和后序可以唯一确定的一棵二叉树
+前序和后序不能唯一确定的一颗二叉树
 
 堆
 是一棵完全二叉树，树种的每个结点的值都不小于(或大于)其左右孩子的值。如果父节点大于左右孩子就是大顶堆，小于等于左右孩子就是小顶堆。
@@ -395,6 +396,21 @@ pop()从数组末尾一处最后一项，减少数组长度，并返回移除的
 <h3 id="Math-pow"><a href="#Math-pow" class="headerlink" title="Math.pow()"></a>Math.pow()</h3><pre><code>Math.pow(底数，次方数) 求某个值的幂 Math.pow(2，2)=2^2=4
 </code></pre>
 <h3 id="Math-ceil-x2F-floor"><a href="#Math-ceil-x2F-floor" class="headerlink" title="Math.ceil()&#x2F;floor()"></a>Math.ceil()&#x2F;floor()</h3><pre><code>向上取整(3.5,4)，向下取整(3.5,3)
+</code></pre>
+<h3 id="数组中slice和splice区别和用法"><a href="#数组中slice和splice区别和用法" class="headerlink" title="数组中slice和splice区别和用法"></a>数组中slice和splice区别和用法</h3><p>*slice()</p>
+<pre><code>从已有的数组中返回选择的某段数组元素，不会改变原始的数组
+slice(start,end)这个区间是左闭右开的，[start,end)
+start可以为负数，表示从尾部开始取值，也是往左取值，-1为倒数第一个元素，-2为倒数第二个，不填写end怎表示取到末尾
+</code></pre>
+<p>*splice()</p>
+<pre><code>从数组中添加或者删除元素，然后返回被删除的数组元素，会改变原始数组
+splice(index,howmany,item1,...,itemX)
+index为删除或添加的起始位置，只写index表示从该位置以后的数值都删除
+howmany 为删除多少元素；0表示添加
+item1，...，itemX为新增加的元素
+</code></pre>
+<h3 id="数组中flat-扁平化-方法"><a href="#数组中flat-扁平化-方法" class="headerlink" title="数组中flat(扁平化)方法"></a>数组中flat(扁平化)方法</h3><pre><code>flat()可以按照指定的深度递归遍历数组，并将所有元素与遍历的子数组中的元素合并为一个的数组返回，默认深度为1
+flat(infinity)，可以展开任意深度的嵌套数组
 </code></pre>
 
                       
@@ -550,7 +566,7 @@ pop()从数组末尾一处最后一项，减少数组长度，并返回移除的
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">数据结构和算法的学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97"><span class="toc-number">1.4.</span> <span class="toc-text">栈与队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%8E%E5%A0%86"><span class="toc-number">1.5.</span> <span class="toc-text">二叉树与堆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.6.</span> <span class="toc-text">附加知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-min-x2F-max"><span class="toc-number">1.6.1.</span> <span class="toc-text">Math.min()&#x2F;max()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-pow"><span class="toc-number">1.6.2.</span> <span class="toc-text">Math.pow()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-ceil-x2F-floor"><span class="toc-number">1.6.3.</span> <span class="toc-text">Math.ceil()&#x2F;floor()</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">数据结构和算法的学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97"><span class="toc-number">1.4.</span> <span class="toc-text">栈与队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%8E%E5%A0%86"><span class="toc-number">1.5.</span> <span class="toc-text">二叉树与堆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.6.</span> <span class="toc-text">附加知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-min-x2F-max"><span class="toc-number">1.6.1.</span> <span class="toc-text">Math.min()&#x2F;max()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-pow"><span class="toc-number">1.6.2.</span> <span class="toc-text">Math.pow()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math-ceil-x2F-floor"><span class="toc-number">1.6.3.</span> <span class="toc-text">Math.ceil()&#x2F;floor()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%ADslice%E5%92%8Csplice%E5%8C%BA%E5%88%AB%E5%92%8C%E7%94%A8%E6%B3%95"><span class="toc-number">1.6.4.</span> <span class="toc-text">数组中slice和splice区别和用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%ADflat-%E6%89%81%E5%B9%B3%E5%8C%96-%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.5.</span> <span class="toc-text">数组中flat(扁平化)方法</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
