@@ -261,6 +261,565 @@
 
         
   
+    <article id="post-Promise知识点"
+  class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/25/Promise%E7%9F%A5%E8%AF%86%E7%82%B9/">Promise知识点</a>
+    </h1>
+  
+
+          <!--显示阅读次数-->
+          
+              
+                <a href="/2022/03/25/Promise%E7%9F%A5%E8%AF%86%E7%82%B9/" class="archive-article-date">
+  	<time datetime="2022-03-25T08:50:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-25</time>
+</a>
+                  
+      </header>
+      
+        <div class="article-entry" itemprop="articleBody">
+          
+                    <h1 id="Promise知识点汇总"><a href="#Promise知识点汇总" class="headerlink" title="Promise知识点汇总"></a>Promise知识点汇总</h1><h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><pre><code>Promise时js进行异步编程的新解决方法
+旧方案是使用回调函数(会产生回调地狱问题)
+
+优势：采用
+
+回调地狱
+    回调函数嵌套调用，外部回调函数异步执行的结果是内部嵌套的回调函数的条件
+形式如下：
+    setTimeout(function () &#123;  //第一层
+        console.log(&#39;武林要以和为贵&#39;);
+        setTimeout(function () &#123;  //第二程
+            console.log(&#39;要讲武德&#39;);
+            setTimeout(function () &#123;   //第三层
+                console.log(&#39;不要搞窝里斗&#39;);
+            &#125;, 1000)
+        &#125;, 2000)
+    &#125;, 3000)
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20201212214033667.png" alt="image"></p>
+<pre><code>其缺点：
+    不便于阅读
+    不便于异步处理
+</code></pre>
+<h3 id="Promise的形式实现"><a href="#Promise的形式实现" class="headerlink" title="Promise的形式实现"></a>Promise的形式实现</h3><pre><code>resolve 解决 函数类型的数据（异步任务成功时调用）
+reject  拒绝 函数类型的数据（异步任务失败时调用）
+const p= new Promise((resolve,reject)=&gt;&#123;
+    异步操作代码
+    resolve(value) //将promise对象的状态设置为【成功】
+    reject(reason) //将promise对象的状态设置为【失败】
+&#125;)
+
+//调用then方法
+p.then((value)=&gt;&#123;&#125;,(reason)=&gt;&#123;&#125;)
+</code></pre>
+<p>Promise的状态</p>
+<pre><code>实例对象中的一个属性【PromiseState】
+*pending    未决定的
+*resolved/fullfilled    成功的
+*rejected   失败的
+
+状态的改变只有两种可能,且只能发生一次变化
+ pending-&gt;fullfilled
+ pending-&gt;rejected
+ 不能成功变成失败或失败变成成功
+
+状态的修改方法
+1.resolve  pending ==&gt; fullfilled
+2.reject    pending ==&gt;rejected
+3.throw 抛出错误 pending ==&gt;rejected
+</code></pre>
+<p>Promise的对象的值</p>
+<pre><code>实例对象中的另一个值【PromiseResult】
+保存着异步任务对象【成功/失败】的结果
+*resolve
+*rejcet
+</code></pre>
+<p>Promise的基本流程</p>
+<p><img src="https://img2020.cnblogs.com/blog/1569466/202006/1569466-20200626141453221-1427511031.png" alt="image"></p>
+<p>Promise.catch方法</p>
+<pre><code>执行的是对失败结果的回调
+</code></pre>
+<p>Promise.resolve()</p>
+<pre><code>如果传入的参数是非promise类型的对象，则返回结果为成功的promise对象
+如果传入的参数是promise类型的对象，则参数的结果决定了resolve的结果
+</code></pre>
+<p>Promise。reject()</p>
+<pre><code>传入的任何参数，返回的结果都是都是一个失败的promise对象
+</code></pre>
+<p>Promise.all()</p>
+<pre><code>接收一个promise数组，状态则取决于每一个promise结果的状态，每个值之间是与的关系，只有全部为成功才为成功，返回的结果是传入promise数组的结果值，否则有一个失败则为失败，返回结果为失败的结果值，不返回成功的结果值
+</code></pre>
+<p>Promise.race()</p>
+<pre><code>接受一个promise数组，返回的是第一个完成的promise函数的状态和结果，类似于竞赛，只有第一名才有结果
+</code></pre>
+<p>Promise的回调</p>
+<pre><code>为一个promise指定多个成功/失败的回调，都会被调用吗？
+
+答：当一promise对象的状态发生了变化，所有的回调都会执行，如果状态不发生变化，则不会执行回调
+
+改变promise状态和指定回调函数谁先谁后（resolve/reject先执行还是.then方法执行）
+
+答：都有可能，正常情况下是先指定回调再改变状态（执行器里为异步任务），但也可以先改变状态再执行回调
+    先改变状态再执行回调
+    1.在执行器里直接调用resolve
+    2.延迟调用.then方法
+    什么时候获得数据
+    1.如果先指定的回调，那么当状态发生改变时，回调函数就会调用，得到数据
+    2.如果先改变的状态，那当指定回调时，回调函数就会调用，得到数据
+
+Promise如何串联多个操作任务
+1.promise的then()方法返回一个新的promise，可以开成then（）的链式调用
+2.通过then的链式调用串联多个同步/异步任务
+
+Promise的异常穿透
+1.当使用promise的then链式调用时，可以在最后指定失败的回调(catch())
+2.前面任何操作出了异常，都会直接传到最后失败的回调中处理
+
+中断promise链
+    返回一个pending状态的promise值，只要promise的状态不改变就不会调用then中的回调
+</code></pre>
+<h3 id="Promise自定义"><a href="#Promise自定义" class="headerlink" title="Promise自定义"></a>Promise自定义</h3><p>*初始化结果（会覆盖已有的promise，已有的方法就不能再使用）</p>
+<pre><code>function Promise(executor)&#123;
+
+    //添加属性
+    this.promiseState=&quot;pending&quot;
+    this.promiseRsult=null
+
+    //用来保存then中的方法
+    this.callbacks=[]
+
+    //保存实例对象的this  (这里考虑到promise出现时，还没ES6，但可以考虑采用)
+    const self=this
+
+    //1.修改对象的状态(promiseState)
+    //2.设置对象结果值(promiseResult)
+
+    function resolve(data)&#123;
+        //判断状态，只能修改一次
+        if(self.promiseState!==&quot;pending&quot;) return
+        self.promiseState=&quot;fullfilled&quot;
+        self.promiseResult=data
+
+        //调用成功的回调函数
+        &lt;!-- if(self.callbacks.onResolved)&#123;
+            self.callback.onResolved(data)
+        &#125; --&gt;
+        self.callbacks.forEach(item=&gt;&#123;
+            item.onResolved(data)
+        &#125;)
+    &#125;
+    function reject(data)&#123;
+        if(self.promiseState!==&quot;pending&quot;) return
+        self.promiseState=&quot;rejected&quot;
+        self.promiseResult=data
+
+        //调用成功的回调函数（then为异步任务）
+        setTimeout(()=&gt;&#123;
+            self.callback.forEach(item=&gt;&#123;
+                item.onRejected(data)
+            &#125;)
+        &#125;)
+        
+    &#125;
+
+    //在原生promise使用throw会改变状态
+    try&#123;
+        //同步调用【执行器函数】
+         executor(resolve,reject)
+    &#125;catch(e)&#123;
+        //修改promise对象状态为失败
+        reject(e)
+    &#125;
+&#125;    
+
+
+Promise.prototype.then=function(onResolved,onRejected)&#123;
+    const self=this
+
+    //判断回调函数参数(异常穿透)
+
+    if(typeof onRejected !==&quot;function&quot;)&#123;
+        onRejected=reason=&gt;&#123;
+            throw reason
+        &#125;
+    &#125;
+
+    //值传递
+
+    if(typeof onResolved !==&quot;function&quot;)&#123;
+        onResolved=value =&gt; value
+    &#125;
+    
+    //.then()方法返回的是一个promise对象
+    return new Promise((resolve,rejcet)=&gt;&#123;
+        function callback(type)&#123;
+             try&#123;
+                //获取回调函数的执行结果(return的对象即为result)
+                let result = type(self.promiseResult)
+                if(result instanceof Promise)&#123;
+                    result.then(v=&gt;&#123;
+                        resolve(v)
+                    &#125;,r=&gt;&#123;
+                        reject(r)
+                    &#125;)
+                &#125;else&#123;
+                    //结果的对象状态为【成功】
+                    resolve(result)
+                &#125;
+            &#125;catch(e)&#123;
+                reject(e)
+            &#125;
+        &#125;
+        if(this.promiseState ===&quot;fullfilled&quot;)&#123;
+            //（then为异步任务）
+            setTimeout(()=&gt;&#123;
+                callback(onResolved)
+            &#125;)
+           
+        &#125;
+        if(this.promiseState ===&quot;rejected&quot;)&#123;
+            //（then为异步任务）
+            setTimeout(()=&gt;&#123;
+                callback(onRejected)
+            &#125;)
+        &#125;
+        if(this.promiseState ===&quot;pending&quot;)&#123;
+            this.callbacks.push(&#123;
+                onResolved:function()&#123;
+                callback(onResolved)
+                &#125;,
+                onRejected:function()&#123;
+                callback(onRejected)
+                &#125; 
+            &#125;)
+        &#125;
+    &#125;)        
+&#125;
+
+//catch
+Promise.prototype.catch=function(onRejected)&#123;
+    return this.then(undefined,onRejected)
+&#125;
+
+//resolve
+Promise.resolve=function(value)&#123;
+    return new promise((resolve,reject)=&gt;&#123;
+        if(value instanceof Promise)&#123;
+        value.then(v=&gt;&#123;
+            resolve(v)
+        &#125;,r=&gt;&#123;
+            reject(r)
+        &#125;)
+    &#125;else&#123;
+        resolve(value)
+    &#125;
+    &#125;)
+    
+&#125;
+
+//reject
+Promise.reject=function(reason)&#123;
+    return new Promise((resolve,rejcet)=&gt;&#123;
+        reject(reason)
+    &#125;)
+&#125;
+
+//all
+Promise.all=function(promises)&#123;
+    return new Promise((resolve,reject)=&gt;&#123;
+        let count =0
+        let arr=[]
+        for(let i=0;i&lt;promises.length;i++)&#123;
+            promises[i].then(v=&gt;&#123;
+                count++
+                arr[i]=v
+                if(count==promises.length)&#123;
+                    resolve(arr)
+                &#125;
+            &#125;,r=&gt;&#123;
+                reject(r)
+            &#125;)
+        &#125;
+    &#125;)
+&#125;
+
+//race
+Promise.race=function(promises)&#123;
+    return new Promise((resolve,reject)=&gt;&#123;
+        for(let i=0;i&lt;promises.length;i++)&#123;
+            promises[i].then(v=&gt;&#123;
+                resolve(v)
+            &#125;,r=&gt;&#123;
+                reject(r)
+            &#125;)
+        &#125;
+    &#125;)
+&#125;
+</code></pre>
+<p>Promise 类</p>
+<pre><code>class Promise&#123;
+    constructor(executor)&#123;
+        //添加属性
+    this.promiseState=&quot;pending&quot;
+    this.promiseRsult=null
+
+    //用来保存then中的方法
+    this.callbacks=[]
+
+    //保存实例对象的this  (这里考虑到promise出现时，还没ES6，但可以考虑采用)
+    const self=this
+
+    //1.修改对象的状态(promiseState)
+    //2.设置对象结果值(promiseResult)
+
+    function resolve(data)&#123;
+        //判断状态，只能修改一次
+        if(self.promiseState!==&quot;pending&quot;) return
+        self.promiseState=&quot;fullfilled&quot;
+        self.promiseResult=data
+
+        //调用成功的回调函数
+        &lt;!-- if(self.callbacks.onResolved)&#123;
+            self.callback.onResolved(data)
+        &#125; --&gt;
+        self.callbacks.forEach(item=&gt;&#123;
+            item.onResolved(data)
+        &#125;)
+    &#125;
+    function reject(data)&#123;
+        if(self.promiseState!==&quot;pending&quot;) return
+        self.promiseState=&quot;rejected&quot;
+        self.promiseResult=data
+
+        //调用成功的回调函数（then为异步任务）
+        setTimeout(()=&gt;&#123;
+            self.callback.forEach(item=&gt;&#123;
+                item.onRejected(data)
+            &#125;)
+        &#125;)
+        
+    &#125;
+
+    //在原生promise使用throw会改变状态
+    try&#123;
+        //同步调用【执行器函数】
+         executor(resolve,reject)
+    &#125;catch(e)&#123;
+        //修改promise对象状态为失败
+        reject(e)
+    &#125;
+    &#125;
+
+    //then方法
+    then(onResolved,onRejected)&#123;
+        const self=this
+
+    //判断回调函数参数(异常穿透)
+
+    if(typeof onRejected !==&quot;function&quot;)&#123;
+        onRejected=reason=&gt;&#123;
+            throw reason
+        &#125;
+    &#125;
+
+    //值传递
+
+    if(typeof onResolved !==&quot;function&quot;)&#123;
+        onResolved=value =&gt; value
+    &#125;
+    
+    //.then()方法返回的是一个promise对象
+    return new Promise((resolve,rejcet)=&gt;&#123;
+        function callback(type)&#123;
+             try&#123;
+                //获取回调函数的执行结果(return的对象即为result)
+                let result = type(self.promiseResult)
+                if(result instanceof Promise)&#123;
+                    result.then(v=&gt;&#123;
+                        resolve(v)
+                    &#125;,r=&gt;&#123;
+                        reject(r)
+                    &#125;)
+                &#125;else&#123;
+                    //结果的对象状态为【成功】
+                    resolve(result)
+                &#125;
+            &#125;catch(e)&#123;
+                reject(e)
+            &#125;
+        &#125;
+        if(this.promiseState ===&quot;fullfilled&quot;)&#123;
+            //（then为异步任务）
+            setTimeout(()=&gt;&#123;
+                callback(onResolved)
+            &#125;)
+           
+        &#125;
+        if(this.promiseState ===&quot;rejected&quot;)&#123;
+            //（then为异步任务）
+            setTimeout(()=&gt;&#123;
+                callback(onRejected)
+            &#125;)
+        &#125;
+        if(this.promiseState ===&quot;pending&quot;)&#123;
+            this.callbacks.push(&#123;
+                onResolved:function()&#123;
+                callback(onResolved)
+                &#125;,
+                onRejected:function()&#123;
+                callback(onRejected)
+                &#125; 
+            &#125;)
+        &#125;
+    &#125;)  
+    &#125;
+
+    //catch方法
+    catch(onRejected)&#123;
+        return this.then(undefined,onRejected)
+    &#125;
+
+    //描述：这是一个静态成员，而不属于实例对象
+    static resolve(value)&#123;
+        if(value instanceof Promise)&#123;
+            value.then(v=&gt;&#123;
+                resolve(v)
+            &#125;,r=&gt;&#123;
+                reject(r)
+            &#125;)
+        &#125;else&#123;
+            resolve(value)
+        &#125;
+    &#125;
+
+    //reject
+    static reject(reason)&#123;
+    reject(reason)
+    &#125;
+
+    //all
+    static all(promises)&#123;
+        return new Promise((resolve,reject)=&gt;&#123;
+            let count =0
+            let arr=[]
+            for(let i=0;i&lt;promises.length;i++)&#123;
+                promises[i].then(v=&gt;&#123;
+                    count++
+                    arr[i]=v
+                    if(count==promises.length)&#123;
+                        resolve(arr)
+                    &#125;
+                &#125;,r=&gt;&#123;
+                    reject(r)
+                &#125;)
+            &#125;
+        &#125;)
+    &#125;
+
+    //race
+    static race(promises)&#123;
+        return new Promise((resolve,reject)=&gt;&#123;
+            for(let i=0;i&lt;promises.length;i++)&#123;
+                promises[i].then(v=&gt;&#123;
+                    resolve(v)
+                &#125;,r=&gt;&#123;
+                    reject(r)
+                &#125;)
+            &#125;
+        &#125;)
+    &#125;
+&#125;
+</code></pre>
+<h3 id="AJAX请求"><a href="#AJAX请求" class="headerlink" title="AJAX请求"></a>AJAX请求</h3><pre><code>//创建对象
+const xhr=new XMLHttpRequest()
+//初始化
+xhr.open(&#39;GET&#39;,&#39;Url&#39;)
+//发送
+xhr.send()
+//处理响应结果
+xhr.onreadystatechange=funcation()&#123;
+    if(xhr.readyState===4)&#123;
+        //判断响应状态码
+        if(xhr.status&gt;=200 &amp;&amp; xhr.status&lt;=300)&#123;
+            //控制台输出响应体
+            console.log(xhr.response)
+        &#125;else&#123;
+            //控制台输出状态码
+            console.log(xhr.status)
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="util-promisify"><a href="#util-promisify" class="headerlink" title="util.promisify"></a>util.promisify</h3><pre><code>返回一个promise对象
+
+案例
+const util=require(&#39;util&#39;)
+const fs=require(&#39;fs&#39;)
+let minereadFile=util.promisify(fs.readFile)
+minereadFile(&#39;url&#39;).then(()=&gt;&#123;&#125;,()=&gt;&#123;&#125;)
+</code></pre>
+<h3 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h3><ul>
+<li><p>fs文件操作</p>
+<p> require(‘fs’).readFile(‘.&#x2F;index.html’,(err,data)&#x3D;&gt;{})</p>
+</li>
+<li><p>数据库操作</p>
+</li>
+<li><p>AJAX</p>
+<p>  $.get(‘&#x2F;server’,data&#x3D;&gt;{})</p>
+</li>
+<li><p>定时器</p>
+<p>  setTimeout(()&#x3D;&gt;{},2000)</p>
+</li>
+</ul>
+
+                      
+
+                        
+        </div>
+        <div class="article-info article-info-index">
+          
+              
+                
+
+                  
+                    <p class="article-more-link">
+                      <a class="article-more-a" href="/2022/03/25/Promise%E7%9F%A5%E8%AF%86%E7%82%B9/">
+                        展开全文 >>
+                      </a>
+                    </p>
+                    
+
+                      
+                            <div class="clearfix"></div>
+        </div>
+  </div>
+</article>
+
+      <aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+        
+  
     <article id="post-面经学习总结"
   class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -819,11 +1378,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
