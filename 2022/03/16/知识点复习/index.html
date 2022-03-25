@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-03-25T08:51:53.164Z">
+<meta property="article:modified_time" content="2022-03-25T11:56:03.173Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -314,7 +314,17 @@ Vue中scrollBehavior方法
     &#123;selector:string,offset?:&#123;x:number,y:number&#125;&#125;
     如果返回一个false值或空对象，则页面不发生滚动
 </code></pre>
-<h3 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h3>
+<h3 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h3><pre><code>在点击添加购物车时，要向服务器发送数据进行存储，服务器没有返回多余的数据，通过服务器显示添加购物车成功，因此仓库store不需要三连环，只在action写就行。发送的数据需要携带商品id(由之前的路由跳转传入$route.param.skuid)和商品数量
+因为没有三连环，所有调用store的action没有返回值给组件
+因为asycn await返回的是一个promise，通过判断是否成功存储数据库成功返回值，如果成功则返回ok，不成功返回一个失败的promise，在组件处使用try，catch方法来进行判断。
+(个人觉得这里很繁琐，可以直接在组件中发送请求，这样就可以直接判断，省去了访问仓库的过程，而且不用使用trycatch)
+
+路由跳转时，一些简单的数据通过quary参数传递
+一些复杂的数据使用会话存储(不持久化，会话结束数据就会消失)来存储（不允许存对象）
+存取的数据使用JSON格式存储和转换
+</code></pre>
+<p>浏览器存储功能：HTML5新增；本地存储localStorage和会话存储sessionStorage(不会持久，会话结束就会消失)</p>
+
                       
 
                         
@@ -579,11 +589,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
