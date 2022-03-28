@@ -16,7 +16,7 @@
 <meta property="og:description" content="面经学习总结">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-25T08:40:18.000Z">
-<meta property="article:modified_time" content="2022-03-25T08:41:11.198Z">
+<meta property="article:modified_time" content="2022-03-28T13:29:01.378Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -202,7 +202,46 @@
           
                     <h1 id="面经学习总结"><a href="#面经学习总结" class="headerlink" title="面经学习总结"></a>面经学习总结</h1><span id="more"></span>
 
-<h2 id="3-25"><a href="#3-25" class="headerlink" title="3.25"></a>3.25</h2>
+
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><p>*js数据类型，区别</p>
+<pre><code>基本数据类型
+Number(数值)、Boolean(布尔值)、String(字符串)、Undefined(未定义)、Null(空值)、Symbol(ES6新增，原始数据类型，独一无二的值)、Bigint(ES6新增，最新的基本数据类型)
+
+基本数据类型的存储方式
+    直接存储在栈中的简单数据段，占据空间小，大小固定，属于被频繁使用的数据类型。
+
+引用数据类型
+Object(对象)、Function(函数)、Array(数组)
+
+引用数据类型的存储方式
+    存储在堆内存中，占据空间大，大小不固定。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址，当解析器寻找引用值时，会检索其在栈的地址，取得地址后从堆中获取实体
+
+
+两种数据类型的区别
+    1.堆比栈空间大，栈比堆运行速度快
+    2.堆内存是无序存储的，可以根据引用直接获取
+    3.基础数据类型比较稳定，而且相对来说内存小
+    4.引用数据类型大小是动态，而且是无限的
+</code></pre>
+<p>*判断是否为数据类型</p>
+<pre><code>arr=[111,23,1]
+Array.isArray(arr)
+arr instanceof Array
+arr.constructor == Array
+Object.prototype.toString.call(arr)
+</code></pre>
+<p>*函数柯里化</p>
+<pre><code>参数复用
+
+兼容性问题
+
+延迟运行
+</code></pre>
+<p>*闭包</p>
+<pre><code>一个函数和对其周围状态的引用捆绑在一起，这种组合就叫闭包。
+闭包可以让你在一个内层函数中访问到其外层函数的作用域。在创建一个函数的同时，闭包就会被同时创建出来
+</code></pre>
+
                       
 
                         
@@ -345,7 +384,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-25"><span class="toc-number">1.1.</span> <span class="toc-text">3.25</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -467,11 +506,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">

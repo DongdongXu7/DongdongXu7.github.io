@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-03-28T09:37:13.549Z">
+<meta property="article:modified_time" content="2022-03-28T11:25:18.987Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -347,6 +347,11 @@ config.headers.字段=store.state.detail.uuid_token
 
 此操作需向服务器将输入的值发送给后端进行操作
 并从新获取服务器的数据
+点击操作需要考虑节流，不然会出现数值为负数的情况
+</code></pre>
+<p>删除全部勾选商品</p>
+<pre><code>因为没有对应的API，所以在考虑删除全部勾选商品时需要对选中的商品进行逐一的删除，在VUex中定义一个方法用来删除，store中可以调用dispatch和getters或store
+又因为单个删除的操作返回的是一个promise值，这边考虑使用promise中的all方法，这样就不会出现某个勾选项没有删除的情况，只有都删除成功了采为真，有一个失败就为失败
 </code></pre>
 
                       
@@ -613,11 +618,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
