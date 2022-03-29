@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-03-28T11:25:18.987Z">
+<meta property="article:modified_time" content="2022-03-29T09:50:04.328Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -353,6 +353,53 @@ config.headers.字段=store.state.detail.uuid_token
 <pre><code>因为没有对应的API，所以在考虑删除全部勾选商品时需要对选中的商品进行逐一的删除，在VUex中定义一个方法用来删除，store中可以调用dispatch和getters或store
 又因为单个删除的操作返回的是一个promise值，这边考虑使用promise中的all方法，这样就不会出现某个勾选项没有删除的情况，只有都删除成功了采为真，有一个失败就为失败
 </code></pre>
+<h3 id="登录-x2F-注册页面"><a href="#登录-x2F-注册页面" class="headerlink" title="登录&#x2F;注册页面"></a>登录&#x2F;注册页面</h3><pre><code>1.登录与注册页面的静态组件
+2.在assset文件夹中放置全部组件共用的静态资源
+3.在样式当中也可以用@符号【src别名】，切记要在前面加上~
+</code></pre>
+<p>*获取验证码的逻辑</p>
+<pre><code>给手机号输入框绑定双向绑定，点击获取验证码按钮时，先判断获取的手机号格式是否正确，如果正确则向服务器发送请求，同时带上手机号，并弹出已发送字样，如果如果手机号格式不正确则报错。
+验证码输入框也需要设为双向绑定，
+</code></pre>
+<p>*登录业务【Token】</p>
+<pre><code>需要收集用户信息（手机号，密码）
+click.prevent修饰符，拦截默认事件，passive不拦截默认事件
+
+登录成功的时候，后台为了区分用户是谁，服务器下发了Token（令牌），Token不是自己造的，而是服务器下发的唯一标识。
+登录接口做的不完美，一般公司中登录时只会给Token，用户信息一般不会给出，而是根据token向服务器索要信息。【前台持久化存储token】
+
+Vuex存储数据不是持久化的，一刷新数据就会消失
+采用会话存储来进行存储
+
+存在问题1：多个组件展示用户信息需要在每一个组件的mounted中发出this.dispatch(&#39;sdafa &#39;)不行
+
+存在问题2：用户已经登录了，就不应该再回到登录页面
+解决方法
+    导航守卫
+    导航：表示路由正在发生变化
+    守卫：相当于判断条件，紫禁城的护卫
+
+    全局守卫：项目中，只要发生路由变化，守卫就能监听到
+        1.全局前置守卫
+            router（实例对象）.beforeEach((to,from,next)=&gt;&#123;
+                //to：可以获取到你要跳转到哪个路由的信息
+                //path：可以获取到你从哪个路由而来的信息
+                //next：放行函数 next（）放行
+                //next(&#39;指定路由&#39;)放行到指定路由
+                //next(false)中断当前路由
+            &#125;)
+        2.全局解析守卫
+        3.全局后置钩子
+
+    路由独享守卫
+
+    组件内守卫
+</code></pre>
+<p>*退出登录</p>
+<pre><code>1.需要发送请求，通知服务器退出登录【清除一些数据;token】
+2. 清除项目中的数据【user Info、token】
+3.点击退出后要路由要跳转到首页
+</code></pre>
 
                       
 
@@ -496,7 +543,7 @@ config.headers.字段=store.state.detail.uuid_token
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-x2F-%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">登录&#x2F;注册页面</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -618,11 +665,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">

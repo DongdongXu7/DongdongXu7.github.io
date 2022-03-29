@@ -16,7 +16,7 @@
 <meta property="og:description" content="面经学习总结">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-25T08:40:18.000Z">
-<meta property="article:modified_time" content="2022-03-28T13:29:01.378Z">
+<meta property="article:modified_time" content="2022-03-29T13:03:15.260Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -241,6 +241,35 @@ Object.prototype.toString.call(arr)
 <pre><code>一个函数和对其周围状态的引用捆绑在一起，这种组合就叫闭包。
 闭包可以让你在一个内层函数中访问到其外层函数的作用域。在创建一个函数的同时，闭包就会被同时创建出来
 </code></pre>
+<h2 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h2><pre><code>H5新特性
+1.语义标签：使得开发者更方便清晰构建页面的布局，header、footer、nav、section、article
+2.增强型表单：修改一些新的input输入特殊性，改善更好的输入控制和验证
+3.视频和音频：提供了音频和视频文件的标准，即使用audio元素，video元素
+4.Canvas绘图    canvas只是一个图形容器，需要通过脚本才能而绘制图形
+5.SVG绘图
+6.地理定位：使用getCurrentPostion（）获取用户的位置，以实现“LBS服务（基于位置的服务）”
+7.拖放API   拖放是一种常见的特性，即捕捉对象以后拖放到另一个位置，任何元素都可以拖放
+8.WebWorker     可以通过加载一个脚本文件，进而创建一个独立工作的线程，在主线程之外运行
+9.WebStorage    本地存储 : loaclStorage , sessionStorage
+10.WebSocket全双工通信协议
+浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送
+</code></pre>
+<p>*cookie、localStorage、sessionStorage的共同点和不同点</p>
+<pre><code>相同点
+    都保存在浏览器端、且都是同源的
+不同点：
+    1.cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递，而sessionStorage和localStorage不会自动把数据发送给服务器，仅在本地保存
+    2.存储大小不同，cookie数据不能超过4K，同时因为每次http请求都会携带cookie、所以cookie只适合保存很小的数据，如会话标识。sessionStorage和localStorage虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大
+    3.数据有效期不同，sessionStorage：仅在当前浏览器窗口关闭之前有效；localStorage：始终有效，窗口或浏览器关闭也一直保存，因此用作持久数据；cookie：只在设置的cookie过期时间之前有效，即使窗口关闭或浏览器关闭
+    4.作用域不同，sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；localstorage在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的
+</code></pre>
+<p>*伪类和伪元素</p>
+<pre><code>一个冒号的为伪类，两个冒号的为为元素
+伪类：用来描述一个元素的特殊状态，用于已有元素处于某种状态时为其添加对应的样式
+
+伪元素：用于创建一些不在DOM树中的元素，并为其添加样式
+表示页面中一些特殊的并不真实存在的元素(特殊的位置)
+</code></pre>
 
                       
 
@@ -384,7 +413,7 @@ Object.prototype.toString.call(arr)
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML5"><span class="toc-number">1.2.</span> <span class="toc-text">HTML5</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -506,11 +535,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
