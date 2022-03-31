@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-03-30T14:00:07.907Z">
+<meta property="article:modified_time" content="2022-03-31T13:32:42.282Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -357,6 +357,10 @@ config.headers.字段=store.state.detail.uuid_token
 2.在assset文件夹中放置全部组件共用的静态资源
 3.在样式当中也可以用@符号【src别名】，切记要在前面加上~
 </code></pre>
+<p>*表单验证</p>
+<pre><code>1.正则表达式
+2.vee-validate插件
+</code></pre>
 <p>*获取验证码的逻辑</p>
 <pre><code>给手机号输入框绑定双向绑定，点击获取验证码按钮时，先判断获取的手机号格式是否正确，如果正确则向服务器发送请求，同时带上手机号，并弹出已发送字样，如果如果手机号格式不正确则报错。
 验证码输入框也需要设为双向绑定，
@@ -370,6 +374,8 @@ click.prevent修饰符，拦截默认事件，passive不拦截默认事件
 
 Vuex存储数据不是持久化的，一刷新数据就会消失
 采用会话存储来进行存储
+
+登录的路由组件：看路由当中是否包含query参数，有：跳到query参数指定路由，没有：跳到/home主页面
 
 存在问题1：多个组件展示用户信息需要在每一个组件的mounted中发出this.dispatch(&#39;sdafa &#39;)不行
 
@@ -386,7 +392,7 @@ Vuex存储数据不是持久化的，一刷新数据就会消失
                 //path：可以获取到你从哪个路由而来的信息
                 //next：放行函数 next（）放行
                 //next(&#39;指定路由&#39;)放行到指定路由
-                //next(false)中断当前路由
+                //next(false)中断当前的导航，如果浏览器的url发生变化了（手动或浏览器回退按钮），那么URL会重置到from路由对应的地址
             &#125;)
         2.全局解析守卫
         3.全局后置钩子
@@ -394,13 +400,42 @@ Vuex存储数据不是持久化的，一刷新数据就会消失
     路由独享守卫
 
     组件内守卫
+    在组件内书写
+    不能获取组件实例this
+    在渲染该组件的对应路由被confirm前调用
+        beforeRouteEnter(to,from,next)=&gt;&#123;
+
+        &#125;
+        beforeRouteUpdate
+        beforeRouteLeave
 </code></pre>
 <p>*退出登录</p>
 <pre><code>1.需要发送请求，通知服务器退出登录【清除一些数据;token】
 2. 清除项目中的数据【user Info、token】
 3.点击退出后要路由要跳转到首页
 </code></pre>
-<h3 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h3><pre><code>基本使用
+<h3 id="未登录的路由导航"><a href="#未登录的路由导航" class="headerlink" title="未登录的路由导航"></a>未登录的路由导航</h3><pre><code>当用户未登录时，不能去交易页面，支付页面，用户中心
+在用户登录时的路由守卫中进行判断，如果没有令牌token的时候，去如果点击了去这些页面，就跳转的登录页面进行登录。登录成功后返回到该页面（在next（&#39;/login?rediect=&#39;+to.path））
+</code></pre>
+<h3 id="用户登录后不能去支付页面和支付成功页面（路由独享）"><a href="#用户登录后不能去支付页面和支付成功页面（路由独享）" class="headerlink" title="用户登录后不能去支付页面和支付成功页面（路由独享）"></a>用户登录后不能去支付页面和支付成功页面（路由独享）</h3><pre><code>在支付页面路由中使用路由独享守卫
+    beforeEnter:(to,from,next)=&gt;&#123;
+        if（from.path===&quot;购物车路由&quot;）
+        next（）
+        else
+        next（false）
+    &#125;
+对支付成功页面的路由也添加，进入路由只能为支付页面
+</code></pre>
+<h3 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h3><pre><code>使用vue-lazyload插件
+Vue.use（vueLazyload，&#123;
+loading：图片url&#125;）
+在使用v-lazy
+</code></pre>
+<h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><pre><code>将路由对应的组件进行分割，只有当路由被访问的时候才加载对应组件
+
+直接component：()=&gt;import&#123;&#39;&#39;&#125;
+</code></pre>
+<h3 id="属性修饰符sync"><a href="#属性修饰符sync" class="headerlink" title="属性修饰符sync"></a>属性修饰符sync</h3><h3 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h3><pre><code>基本使用
 安装axios依赖后，直接引入axios
 axios(&#123;url:&quot;链接&quot;,method:&quot;请求方式&quot;&#125;)
 返回结果为一个Promise对象
@@ -411,6 +446,40 @@ axios(&#123;url:&quot;链接&quot;,method:&quot;请求方式&quot;&#125;)
 </code></pre>
 <p>*post方法</p>
 <pre><code>发送post请求，第一个参数为url，第二个为data数据
+</code></pre>
+<p>*拦截器</p>
+<pre><code>请求拦截器
+后进先执行
+响应拦截器
+先进先执行    
+</code></pre>
+<p>*instance 与 axios的区别</p>
+<pre><code>相同点
+    1.都是一个能发送任意请求的函数：require（config）
+    2.都有发特定请求的各种方法：get、post、put、delete
+    3.都有默认配置和拦截器的属性
+不同点
+    1.默认配置很可能不一样
+    2.instance没有axios后面添加的一些方法：create/CancelToken/all
+</code></pre>
+<h3 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h3><pre><code>是一种前端资源构造工具，静态模块打包器
+
+Entry
+入口指示Webpack以哪个文件为入口起点开始打包，分析构建内部依赖图
+Output
+输出指示Webpack打包后的资源bundles输出到哪里去，以及如何命名
+Loader
+让webpack能够去处理那些非js文件（webpack自身只理解js）（css，img等翻译成webpack能理解的文件）
+Plugins
+插件可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等
+Mode
+development开发模式     特点：能让代码在本地调试运行的环境
+production生产模式      特点：能让代码优化上线运行的环境
+
+
+
+webpack可以处理js、json资源，不能处理css、img等其他资源
+生产环境和开发环境将ES6模块化编译成浏览器能识别的模块化
 </code></pre>
 
                       
@@ -555,7 +624,7 @@ axios(&#123;url:&quot;链接&quot;,method:&quot;请求方式&quot;&#125;)
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-x2F-%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">登录&#x2F;注册页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios"><span class="toc-number">1.3.7.</span> <span class="toc-text">axios</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-x2F-%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">登录&#x2F;注册页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E7%99%BB%E5%BD%95%E7%9A%84%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.7.</span> <span class="toc-text">未登录的路由导航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%90%8E%E4%B8%8D%E8%83%BD%E5%8E%BB%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2%E5%92%8C%E6%94%AF%E4%BB%98%E6%88%90%E5%8A%9F%E9%A1%B5%E9%9D%A2%EF%BC%88%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%EF%BC%89"><span class="toc-number">1.3.8.</span> <span class="toc-text">用户登录后不能去支付页面和支付成功页面（路由独享）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.9.</span> <span class="toc-text">图片懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.10.</span> <span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E4%BF%AE%E9%A5%B0%E7%AC%A6sync"><span class="toc-number">1.3.11.</span> <span class="toc-text">属性修饰符sync</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios"><span class="toc-number">1.3.12.</span> <span class="toc-text">axios</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Webpack"><span class="toc-number">1.3.13.</span> <span class="toc-text">Webpack</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
