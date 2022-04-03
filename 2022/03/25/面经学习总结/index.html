@@ -15,10 +15,12 @@
 <meta property="og:site_name" content="Mr.Xu&#39;s Blog">
 <meta property="og:description" content="面经学习总结">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://vuex.vuejs.org/vuex.png">
 <meta property="article:published_time" content="2022-03-25T08:40:18.000Z">
-<meta property="article:modified_time" content="2022-03-31T14:20:07.753Z">
+<meta property="article:modified_time" content="2022-04-03T12:42:48.383Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vuex.vuejs.org/vuex.png">
   
     <link rel="alternative" href="/atom.xml" title="Mr.Xu&#39;s Blog" type="application/atom+xml">
   
@@ -445,20 +447,58 @@ VM层通过接口向M层请求数据，继而VM层与V层实现数据的双向�
 原生DOM可以绑定系统事件，如点击，输入等事件
 组件标签可以绑定的为自定义事件，可以使用.native将自定义事件变成原生的系统事件
 </code></pre>
-<h2 id="事件委派"><a href="#事件委派" class="headerlink" title="事件委派"></a>事件委派</h2><h2 id="组件通讯"><a href="#组件通讯" class="headerlink" title="组件通讯"></a>组件通讯</h2><pre><code>$attrs 组建的一个属性，可以获取到父组件传递过来的props数据，如果props已经接受了某些数据，$attr当中获取不到
+<h2 id="事件委派"><a href="#事件委派" class="headerlink" title="事件委派"></a>事件委派</h2><h2 id="组件通讯"><a href="#组件通讯" class="headerlink" title="组件通讯"></a>组件通讯</h2><pre><code>1.$attrs 组建的一个属性，可以获取到父组件传递过来的props数据，如props已经接受了某些数据，$attr当中获取不到
 使用v-bind=&quot;$attr&quot; 使用
-$listeners  可以获取到父组件给子组件传递的自定义事件
+2.$listeners  可以获取到父组件给子组件传递的自定义事件
 使用v-on=&quot;$listener&quot; 使用
 
-$children组件实例的属性，可以获取到当前组件的全部子组件【数组】
-$parent组件实例的属性，可以获取到当前子组件的父组件，进而可以操控父组件的数据和方法
+3.$children组件实例的属性，可以获取到当前组件的全部子组件【数组】
+4.$parent组件实例的属性，可以获取到当前子组件的父组件，进而可以操控父组件的数据和方法
 
-插槽
+5.插槽
 实现父子组件通信
-默认插槽
-具名插槽
-作用域插槽：子组件的数据来源于父组件，子组件决定不了自身的结构与外观
+1）默认插槽
+    子组件中使用&lt;slot&gt;&lt;/slot&gt;
+
+2)具名插槽
+    在子组件中的solt使用name进行标记
+    然后再父组件中使用slit=&quot;name名&quot;，将内容插进
+    或者使用v-slot=name,但必须使用在template中
+
+3)作用域插槽：子组件的数据来源于父组件，子组件决定不了自身的结构与外观，通过slot标签传递数据(:game=&quot;game&quot;)然后再父组件中使用在template标签中的scope或slot-scope接收数据
+
+6.ref
+1.真实dom标签在获取DOM节点的信息
+2.组件标签中使用可以获取到组件实例对象，实现组件通信，父子组件通信
+使用this.$refs.xxx获取
+
+7.props 父子组件通信
+在组件标签中使用:xxx=&quot;xxx&quot;在子组件中使用props接收，可以获得父元素的数据,也可以传递方法，使得其在子组件中进行使用，实现子向父通信
+
+8.自定义事件
+方法一、
+    父组件中在子组件标签上使用v-on或@来监听自定义事件，
+    子组件中使用this上的$emit触发自定义事件
+    在事件名后.once实现只触发一次
+方法二、
+    使用ref获取子组件的实例对象
+    并在this.$refs.xxx.$on(&quot;自定义事件名&quot;,function)定义自定义事件
+    将$on换成$once实现只触发一次
+    子组件中使用this上的$emit触发自定义事件
+
+采用$off解绑自定义事件，如果有多个使用数组的形式
+在组件标签中原生DOM事件的使用要加.native
+
+9.全局事件总线
+在main.js中beforeCreated生命周期钩子中使用Vue.prototype.$bus=this安装全局事件总线，可以实现任意组件的通信
+
+10.消息订阅与发布
+public-js
+
+11.Vuex
+    集中式数据管理，Vue中的插件，使用Vue.use(Vuex)使用
 </code></pre>
+<p><img src="https://vuex.vuejs.org/vuex.png" alt="image"><br>        getter 用于将state中的数据进行加工</p>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><pre><code>总体：初始化-运行中-销毁
 详细：开始创建、初始化数据、编译模板、挂载DOM、、渲染－更新－渲染、销毁
 
@@ -483,6 +523,83 @@ activated函数：keep-alive组件停用时调用
 6.beforeDestroy：vue（组件）对象销毁之前
 7.destroyed：vue组件销毁后
 </code></pre>
+<p>*Vue的特性</p>
+<pre><code>1.表单操作
+2.自定义指令
+3.计算属性
+4.过滤器
+5.侦听器
+6.生命周期
+</code></pre>
+<p>*vue生命周期中异步加载在mounted中还是created中实现</p>
+<pre><code>答：最常用的是在created中调用异步请求，
+
+一般来说，可以在，created，mounted中都可以发送数据请求，但是，大部分时候，会在created发送请求。Created的使用场景：如果页面首次渲染的就来自后端数据。因为，此时data 已经挂载到vue实例了。在 created（如果希望首次选的数据来自于后端，就在此处发请求（只发了异步请求，渲染是在后端响应之后才进行的）、beforeMount、mounted（在mounted中发请求会进行二次渲染） 这三个钩子函数中进行调用。因为在这三个钩子函数中，data 已经创建，可以将服务端返回的数据进行赋值。但是最常用的是在 created 钩子函数中调用异步请求，因为在created 钩子函数中调用异步请求有两个优点：第一点：能更快获取到服务端数据，减少页面 loading 时间；第二点：放在 created 中有助于一致性，因为ssr 不支持 beforeMount、mounted 钩子函数。
+</code></pre>
+<p>*render函数</p>
+<pre><code>vue脚手架中使用ES6语言引入Vue时，引入的是阉割版本或者说残缺版本的vue（残缺了模板解析器）
+组件内的template标签有专门的编译器进行解析
+render 函数讲解
+</code></pre>
+<p>render 函数即渲染函数，它是个函数，它的参数也是个函数——即 createElement，我们重点来说 createElement 参数。</p>
+<p>render 函数的返回值（VNode）<br>VNode（即：虚拟节点），也就是我们要渲染的节点。</p>
+<p>render 函数的参数（createElement）<br>createElement 是 render 函数 的参数，它本身也是个函数，并且有三个参数。</p>
+<p>createElement 函数的返回值（VNode）<br>createElement 函数的返回值是 VNode（即：虚拟节点）。</p>
+<p>createElement 函数的参数（三个）<br>Vue&#x3D;核心代码+模板解析器</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><pre><code>SPA（单页面）应用
+vue-router专门用来实现SPA应用
+1.单页Web应用
+2.整个应用只有一个完整的页面
+3.点击页面中的导航连接不会刷新页面，只会做到页面的局部更新
+4.数据需用通过AJAX请求获取
+
+1.通过切换，&quot;隐藏&quot;了的路由组件，默认是被销毁掉的，需要的时候再去挂载
+2.每个路由组件都有自己的$route属性，里面存储着自己的路由信息。
+3.整个应用只有router，可以通过组件的$router属性获取到
+
+使用router-link标签进行跳转，标签内用
+to=&quot;/跳转地址&quot;进行路由地址方向的跳转
+
+指定展示位置
+router-view
+
+多级路由
+在一级路由的配置中添加children
+&#123;
+    path:&#39;/xxx&#39;,
+    component:,
+    children:[
+        &#123;path:&#39;xxx&#39;,component&#125;,
+        &#123;&#125;, 
+        ]
+&#125;
+路由跳转时to要将父路由路径添加上/父/子
+</code></pre>
+<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>*浏览器输入url后发生了什么</p>
+<pre><code>1.解析url
+2.DNS查询
+3.TCP连接
+4.处理请求
+5.接收响应
+6.渲染页面
+</code></pre>
+<p>*http与https的区别</p>
+<pre><code>HTTPS和HTTP的区别主要如下：
+
+1、https协议需要到ca申请证书，一般免费证书较少，因而需要一定费用。
+
+2、http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl   加密传输协议。
+
+3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是  80，后者是443。
+
+4、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可  进行加密传输、身份认证的网络协议，比http协议安全。
+
+5.HTTPs是在传输层，HTTP在应用层
+</code></pre>
+<p>*$nextTick</p>
+<pre><code>$nextTick(回调函数)将回调函数延迟到DOM更新循环后执行。在修改数据后立即执行它，然后等待DOM更新
+</code></pre>
+<p>*TCP的三次握手<br>*TCP和UDP<br>*GET和POST的区别</p>
 
                       
 
@@ -626,7 +743,7 @@ activated函数：keep-alive组件停用时调用
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">1.2.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-number">1.3.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">1.4.</span> <span class="toc-text">浅拷贝与深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue"><span class="toc-number">1.5.</span> <span class="toc-text">Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trim"><span class="toc-number">1.6.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">自定义插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.8.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.9.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%B4%BE"><span class="toc-number">1.10.</span> <span class="toc-text">事件委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF"><span class="toc-number">1.11.</span> <span class="toc-text">组件通讯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.12.</span> <span class="toc-text">生命周期</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">1.2.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-number">1.3.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">1.4.</span> <span class="toc-text">浅拷贝与深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue"><span class="toc-number">1.5.</span> <span class="toc-text">Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trim"><span class="toc-number">1.6.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">自定义插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.8.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.9.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%B4%BE"><span class="toc-number">1.10.</span> <span class="toc-text">事件委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF"><span class="toc-number">1.11.</span> <span class="toc-text">组件通讯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.12.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">1.13.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.14.</span> <span class="toc-text">计算机网络</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
