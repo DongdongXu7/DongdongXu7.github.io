@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-04-01T12:09:00.319Z">
+<meta property="article:modified_time" content="2022-04-05T06:14:11.894Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -494,6 +494,14 @@ plugins：plugins的配置
     功能：默认创建一个空的html，自动引入打包输出的所有资源(css/js)
 mode：工作模式：（生产）（开发 ）
 </code></pre>
+<p>*开发服务器</p>
+<pre><code>devServer：用于自动化(自动编译，自动打开浏览器)
+特单：只会在内存中编译打包，不会有任何输出
+</code></pre>
+<p>*loader与Plugin的区别</p>
+<pre><code>Loader直译为&quot;加载器&quot;。Webpack将一切文件视为模块，但是webpack原生是只能解析js文件，如果想将其他文件也打包的话，就会用到loader。 所以Loader的作用是让webpack拥有了加载和解析非JavaScript文件的能力。
+Plugin直译为&quot;插件&quot;。Plugin可以扩展webpack的功能，让webpack具有更多  的灵活性。在Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
+</code></pre>
 
                       
 
@@ -763,11 +771,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">兴趣</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">兴趣</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
             
             <div class="clearfix"></div>
