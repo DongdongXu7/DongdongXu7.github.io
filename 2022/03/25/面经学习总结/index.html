@@ -15,12 +15,10 @@
 <meta property="og:site_name" content="Mr.Xu&#39;s Blog">
 <meta property="og:description" content="面经学习总结">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://vuex.vuejs.org/vuex.png">
 <meta property="article:published_time" content="2022-03-25T08:40:18.000Z">
-<meta property="article:modified_time" content="2022-04-05T15:09:02.915Z">
+<meta property="article:modified_time" content="2022-04-11T13:55:45.316Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vuex.vuejs.org/vuex.png">
   
     <link rel="alternative" href="/atom.xml" title="Mr.Xu&#39;s Blog" type="application/atom+xml">
   
@@ -205,130 +203,7 @@
                     <h1 id="面经学习总结"><a href="#面经学习总结" class="headerlink" title="面经学习总结"></a>面经学习总结</h1><span id="more"></span>
 
 
-<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><pre><code>js是一个单线程脚本语言，需要异步来辅助
-</code></pre>
-<p>*js数据类型，区别</p>
-<pre><code>基本数据类型
-Number(数值)、Boolean(布尔值)、String(字符串)、Undefined(未定义)、Null(空值)、Symbol(ES6新增，原始数据类型，独一无二的值)、Bigint(ES6新增，最新的基本数据类型)
 
-基本数据类型的存储方式
-    直接存储在栈中的简单数据段，占据空间小，大小固定，属于被频繁使用的数据类型。
-
-引用数据类型
-Object(对象)、Function(函数)、Array(数组)
-
-引用数据类型的存储方式
-    存储在堆内存中，占据空间大，大小不固定。引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址，当解析器寻找引用值时，会检索其在栈的地址，取得地址后从堆中获取实体
-
-
-两种数据类型的区别
-    1.堆比栈空间大，栈比堆运行速度快
-    2.堆内存是无序存储的，可以根据引用直接获取
-    3.基础数据类型比较稳定，而且相对来说内存小
-    4.引用数据类型大小是动态，而且是无限的
-</code></pre>
-<p>*判断是否为数据类型</p>
-<pre><code>arr=[111,23,1]
-Array.isArray(arr)
-arr instanceof Array
-arr.constructor == Array
-Object.prototype.toString.call(arr)
-</code></pre>
-<p>*函数柯里化</p>
-<pre><code>参数复用
-
-兼容性问题
-
-延迟运行
-</code></pre>
-<p>*闭包</p>
-<pre><code>一个函数和对其周围状态的引用捆绑在一起，这种组合就叫闭包。
-闭包可以让你在一个内层函数中访问到其外层函数的作用域。在创建一个函数的同时，闭包就会被同时创建出来
-</code></pre>
-<p>*宏任务和微任务</p>
-<pre><code>宏任务：setTimeout，setInterval，Ajax，DOM事件
-微任务：Promise， async/await
-微任务执行时比宏任务要早
-
-同步和异步
-异步不会阻塞程序的执行
-同步会阻塞程序的执行
-
-异步的使用场景：
-    1.定时任务：setTimeout。setInverval
-    2.网络请求：Ajax，动态&lt;img&gt;加载
-    3.事件绑定
-</code></pre>
-<p>*事件循环<br>    js分为同步任务和异步任务，同步任务进入主线程中执行，异步任务加入任务队列，当执行栈中为空时（js引擎空闲）就回去读取任务队列，将可以运行的任务对象添加到执行栈中开始执行，当一个异步任务执行完成之后就会去执行下一个异步任务，执行任务队列中任务的过程就称之为事件循环</p>
-<p>*v-show和v-if的区别</p>
-<pre><code>v-show和v-if都是用来显示隐藏元素，v-if还有一个v-else配合使用，两者达到的效果都一样，但是v-if更消耗性能的，因为v-if在显示隐藏过程中有DOM的添加和删除，v-show就简单多了，只是操作css
-</code></pre>
-<p>*Vue列表中为什么加Key</p>
-<pre><code>因为vue组件高度复用增加Key可以标识组件的唯一性，为了更好地区别各个组件 key的作用主要是为了高效的更新虚拟DOM
-</code></pre>
-<p>*双向数据绑定</p>
-<pre><code>Object.defaultProperty(obj,&quot;属性&quot;,&#123;配置&#125;)
-</code></pre>
-<p>*数据代理</p>
-<pre><code>通过一个对象代理另一个对象中属性的操作
-使用Object.defaultProperty完成
-let obj1=&#123;x:100&#125;
-let obj2=&#123;y:200&#125;
-Object.defaultProperty(obj2,&#39;x&#39;,&#123;
-    get()&#123;
-        return obj1.x
-    &#125;
-    set(value)&#123;
-        onj1.x=value
-    &#125;
-&#125;)
-数据代理的实现主要是靠Object.defaultProperty中的set函数完成
-
-Vue中的数据代理是将data 中的数据交给了vue的实例对象，可以通过实例对象直接进行对数据的操作
-</code></pre>
-<p>*事件修饰符</p>
-<pre><code>.prevent：阻止默认事件
-.stop：阻止事件冒泡
-.once：事件只发生一次
-.capture：事件的捕获模式
-.passive：事件立即执行
-</code></pre>
-<p>*计算属性</p>
-<pre><code>通过已有属性（data中的数据）计算得来的原本不存在的属性（会出现再vue实例对象上，可以直接调用）
-底层借用了Object.defaultProperty方法提供的getter和setter
-内部有缓存机制（复用），效率高，调试方便
-写法：
-    1.完整形式（读和改）使用对象，对象中采用get和set去进行读取和修改
-    2.简写（只考虑读取）使用函数形式，要求有返回值
-</code></pre>
-<p>*监视属性</p>
-<pre><code>watch:&#123;
-    属性：&#123;
-        deep：true、、开启深度监视
-    immediate：true //初始化的时候让handler调用一下
-    //handler当数据发送了变化，就调用
-    handler(newValue,oldValue)&#123;
-
-    &#125;
-    &#125;
-    
-&#125;
-
-watch与computed的区别
-watch更加适用于监听某一个值得变化，并做对应操作，比如请求后太接口等。而computed适用于计算已有的值并返回结果。 监听简单数据类型
-</code></pre>
-<p>*Vue 为什么要用 vm.$set() 解决对象新增属性不能响应的问题 ？你能说说如下代码的实现原理么？<br>    1.Vue使用了Object.defineProperty实现双向数据绑定<br>    2.在初始化实例时对属性执行 getter&#x2F;setter 转化<br>    3.属性必须在data对象上存在才能让Vue将它转换为响应式的（这也就造成了Vue无法检测到对象属性的添加或删除）<br>    所以Vue提供了Vue.set (object, propertyName, value) &#x2F; vm.$set (object, propertyName, value)</p>
-<p>*过滤器</p>
-<pre><code>Vue.filter（“”，function（）&#123;&#125;）
-</code></pre>
-<p>*自定义指令</p>
-<pre><code>在directives中设定，可以为对象，也可以为函数
-函数时name（element，bindng）&#123;
-    element属于DOM元素，binding绑定的属性，里面有传入的值
-&#125;
-1.指令与元素成共绑定时函数被调用
-2.指令所在的模板被重新解析的时候
-</code></pre>
 <h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>*H5新特性</p>
 <pre><code>1.语义标签：使得开发者更方便清晰构建页面的布局，header、footer、nav、section、article
 2.增强型表单：修改一些新的input输入特殊性，改善更好的输入控制和验证
@@ -508,275 +383,7 @@ ES6的Object.assign方法
 
 缺点：无法深拷贝map，set
 </code></pre>
-<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>*v-model</p>
-<pre><code>作用：
-    在表单及元素上创建双向数据绑定
-1.它会根据控件类型自动选取正确的方法来更新元素
-2.会监视用户的输入事件来更新数据，并对一些极端场景进行特殊处理
-3.会忽略所有的value，checked，selected的初始值，而是总将Vue实例的数据作为数据来源
-
-v-model实现原理
-靠v-bind:绑定响应式数据
-触发oninput事件传递数据
-</code></pre>
-<p>*Vue2.0双向绑定的缺陷，以及vue3的实现方法</p>
-<p>*MVVM模型</p>
-<pre><code>M模型
-V视图
-VM视图模型
-
-最大特征：前后端数据分离
-VM层通过接口向M层请求数据，继而VM层与V层实现数据的双向绑定
-</code></pre>
-<p>*Vue脚手架中data为什么可以用函数，而不用对象</p>
-<pre><code>js中只有函数的&#123;&#125;能够构造作用域，而对象&#123;&#125;,if（）&#123;&#125;都不能构造作用域，data是一个函数时，每个组件实例都有自己的作用域，每个组件相互独立，不会互相影响
-</code></pre>
-<p>*$nextTick</p>
-<pre><code>$nextTick(回调函数)将回调函数延迟到DOM更新循环后执行。在修改数据后立即执行它，然后等待DOM更新。
-Vue DOM更新是异步任务，即修改数据后，不会立即执行视图的更新，而是会监听数据变化，并缓存在同一事件循环中，等同一事件循环中的所有数据都完成变化后，再同一更新视图。
-</code></pre>
-<h2 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h2><h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><pre><code>regExp
-变量=/正则表达式/匹配模式
-    用|表示或者的意思
-    用[]也是或的关系
-    [a-z]任意小写
-    [A-Z]任意大写
-    [A-z]任意字母
-    [^ ]除了xx
-</code></pre>
-<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><pre><code>实现子对父的组件通信
-在子组件中使用$emit(&quot;父组件定义的事件名&quot;,&quot;参数&quot;)
-原生DOM可以绑定系统事件，如点击，输入等事件
-组件标签可以绑定的为自定义事件，可以使用.native将自定义事件变成原生的系统事件
-</code></pre>
-<h2 id="事件委派"><a href="#事件委派" class="headerlink" title="事件委派"></a>事件委派</h2><h2 id="组件通讯"><a href="#组件通讯" class="headerlink" title="组件通讯"></a>组件通讯</h2><pre><code>1.$attrs 组建的一个属性，可以获取到父组件传递过来的props数据，如props已经接受了某些数据，$attr当中获取不到
-使用v-bind=&quot;$attr&quot; 使用
-当多层嵌套时，父组件向给子组件以下的子组件传递参数时，似乎用$attr和$listener进行传递
-2.$listeners  可以获取到父组件给子组件传递的自定义事件
-使用v-on=&quot;$listener&quot; 使用
-
-3.$children组件实例的属性，可以获取到当前组件的全部子组件【数组】
-4.$parent组件实例的属性，可以获取到当前子组件的父组件，进而可以操控父组件的数据和方法
-
-5.插槽
-实现父子组件通信
-1）默认插槽
-    子组件中使用&lt;slot&gt;&lt;/slot&gt;
-
-2)具名插槽
-    在子组件中的solt使用name进行标记
-    然后再父组件中使用slit=&quot;name名&quot;，将内容插进
-    或者使用v-slot=name,但必须使用在template中
-
-3)作用域插槽：子组件的数据来源于父组件，子组件决定不了自身的结构与外观，通过slot标签传递数据(:game=&quot;game&quot;)然后再父组件中使用在template标签中的scope或slot-scope接收数据
-
-6.ref
-1.真实dom标签在获取DOM节点的信息
-2.组件标签中使用可以获取到组件实例对象，实现组件通信，父子组件通信
-使用this.$refs.xxx获取
-
-7.props 父子组件通信
-在组件标签中使用:xxx=&quot;xxx&quot;在子组件中使用props接收，可以获得父元素的数据,也可以传递方法，使得其在子组件中进行使用，实现子向父通信
-
-8.自定义事件
-方法一、
-    父组件中在子组件标签上使用v-on或@来监听自定义事件，
-    子组件中使用this上的$emit触发自定义事件
-    在事件名后.once实现只触发一次
-方法二、
-    使用ref获取子组件的实例对象
-    并在this.$refs.xxx.$on(&quot;自定义事件名&quot;,function)定义自定义事件
-    将$on换成$once实现只触发一次
-    子组件中使用this上的$emit触发自定义事件
-
-采用$off解绑自定义事件，如果有多个使用数组的形式
-在组件标签中原生DOM事件的使用要加.native
-
-9.全局事件总线
-在main.js中beforeCreated生命周期钩子中使用Vue.prototype.$bus=this安装全局事件总线，可以实现任意组件的通信
-
-10.消息订阅与发布
-public-js
-
-11.Vuex
-    集中式数据管理，Vue中的插件，使用Vue.use(Vuex)使用
-</code></pre>
-<p><img src="https://vuex.vuejs.org/vuex.png" alt="image"><br>        getter 用于将state中的数据进行加工<br>    Vuex中mutation与action的区别<br>    1.mutation不能直接被调用，需要使用store中的commit的方法<br>        mutation可以改变state的状态，只能处理同步任务<br>    2.action可以直接被调用，可以处理异步任务<br>        action不能直接改变状态</p>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><pre><code>总体：初始化-运行中-销毁
-详细：开始创建、初始化数据、编译模板、挂载DOM、、渲染－更新－渲染、销毁
-
-1.new Vue()创建Vue实例对象
-初始化事件和生命周期，数据代理还没开始
-2.beforeCreated（无法通过实例访问到data中的数据和method中的方法）
-初始化数据监听和数据代理
-3.Created（可以通过实例访问到data中的数据和methods中的方法）
-此时如果数据初始值来自后端数据库，可以在此发送ajax请求获取数据，而不会触发update
-检查是否有el属性，有就往下进行，没有在检查是否实例中有$el
-检查是否有template属性（render&gt;template&gt;el）
-以上两个阶段生成虚拟DOM，页面还没能显示解析好的内容
-4.beforeMount，此时页面的DOM结构都未经过Vue解析，对DOM的操作最终都不生效
-将虚拟DOM转为真实DOM插入页面
-5.Mounted,页面中呈现真实DOM，对DOM操作均有效，一般来说，我们在此处发送异步请求（ajax，fetch，axios等），获取服务器上的数据，显示在DOM里。
-5.1beforeUpdate函数：
-组件更新之前执行的函数，只有数据更新后，才能调用（触发）beforeUpdate，
-5.2updated函数：
-组件更新之后执行的函数vue（组件），对象对应的dom中的内部（innerHTML）改变了，所以，叫作组件更新之后
-activated函数：keep-alive组件激活时调用
-deactivated函数：keep-alive组件停用时调用
-6.beforeDestroy：vue（组件）对象销毁之前
-7.destroyed：vue组件销毁后
-</code></pre>
-<p>*Vue的特性</p>
-<pre><code>1.表单操作
-2.自定义指令
-3.计算属性
-4.过滤器
-5.侦听器
-6.生命周期
-</code></pre>
-<p>*vue生命周期中异步加载在mounted中还是created中实现</p>
-<pre><code>答：最常用的是在created中调用异步请求，
-
-一般来说，可以在，created，mounted中都可以发送数据请求，但是，大部分时候，会在created发送请求。Created的使用场景：如果页面首次渲染的就来自后端数据。因为，此时data 已经挂载到vue实例了。在 created（如果希望首次选的数据来自于后端，就在此处发请求（只发了异步请求，渲染是在后端响应之后才进行的）、beforeMount、mounted（在mounted中发请求会进行二次渲染） 这三个钩子函数中进行调用。因为在这三个钩子函数中，data 已经创建，可以将服务端返回的数据进行赋值。但是最常用的是在 created 钩子函数中调用异步请求，因为在created 钩子函数中调用异步请求有两个优点：第一点：能更快获取到服务端数据，减少页面 loading 时间；第二点：放在 created 中有助于一致性，因为ssr 不支持 beforeMount、mounted 钩子函数。
-</code></pre>
-<p>*render函数</p>
-<pre><code>vue脚手架中使用ES6语言引入Vue时，引入的是阉割版本或者说残缺版本的vue（残缺了模板解析器）
-组件内的template标签有专门的编译器进行解析
-render 函数讲解
-render 函数即渲染函数，它是个函数，它的参数也是个函数——即   createElement，我们重点来说 createElement 参数。
-
-render 函数的返回值（VNode）
-VNode（即：虚拟节点），也就是我们要渲染的节点。
-
-render 函数的参数（createElement）
-createElement 是 render 函数 的参数，它本身也是个函数，并且有三个参数。
-
-createElement 函数的返回值（VNode）
-createElement 函数的返回值是 VNode（即：虚拟节点）。
-
-createElement 函数的参数（三个）
-Vue=核心代码+模板解析器
-</code></pre>
-<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><pre><code>SPA（单页面）应用
-vue-router专门用来实现SPA应用
-1.单页Web应用
-2.整个应用只有一个完整的页面
-3.点击页面中的导航连接不会刷新页面，只会做到页面的局部更新
-4.数据需用通过AJAX请求获取
-
-1.通过切换，&quot;隐藏&quot;了的路由组件，默认是被销毁掉的，需要的时候再去挂载
-2.每个路由组件都有自己的$route属性，里面存储着自己的路由信息。
-3.整个应用只有router，可以通过组件的$router属性获取到
-
-使用router-link标签进行跳转，标签内用
-to=&quot;/跳转地址&quot;进行路由地址方向的跳转
-
-指定展示位置
-router-view
-
-多级路由
-在一级路由的配置中添加children
-&#123;
-    path:&#39;/xxx&#39;,
-    component:,
-    children:[
-        &#123;path:&#39;xxx&#39;,component&#125;,
-        &#123;&#125;, 
-        ]
-&#125;
-路由跳转时to要将父路由路径添加上/父/子
-
-命名路由
-    直接在routes的路由配置中使用name进行命名
-
-replace模式
-    控制路由跳转时操作浏览器历史记录的模式，及覆盖历史记录，无法回退到前一个路由页面
-    开启方式
-        直接在router-link中添加replace
-push模式
-    默认模式，可以回退
-
-缓存路由组件
-在router-veiw外面加上keep-alive标签
-
-meta路由源信息，可以为路由添加参数，可以用于判断
-</code></pre>
-<p>*编程式路由导航</p>
-<pre><code>使用$router上的push和replace方法，传入的参数和to的形式一样
-    
-</code></pre>
-<p>*携带query参数</p>
-<pre><code>to的对象写法
-:to=&quot;&#123;
-    path:&#39;&#39;(亦可以用name),
-    query:&#123;
-        参数1，
-        参数2
-    &#125;
-&#125;&quot;
-</code></pre>
-<p>*params参数</p>
-<pre><code>需要在routes的路由配置中path的url后使用占位符占位(:id)
-to的对象写法
-:to=&quot;&#123;
-    name:&#39;&#39;,
-    params:&#123;
-        参数1，
-        参数2
-    &#125;
-&#125;&quot;
-在route-link中配置只能用name
-</code></pre>
-<p>*props配置</p>
-<pre><code>在路由配置中使用props
-props的第一种写法，值为对象，该对象中的所有key-value值都会以props的形式传递个当前路由组件
-props:&#123;id:xxx,title:xxxx&#125;
-
-第二种写法，值为布尔值，如果为真，将所有该路由组件接收到的params参数，以props的形式传递给该组件
-
-第三种写法，值为函数
-props($route)&#123;
-    return &#123;&#125;
-&#125;
-</code></pre>
-<p>*路由守卫<br>    1.全局路由守卫<br>        1.1前置守卫beforeEach（to，from，next）<br>        1.2后置守卫afterEach(to，from)初始化的时候被调用，每次路由切换后被调用<br>    2.独享路由守卫<br>        。      ]][[]]<br>    3.组件内守卫</p>
-<p>*keep-alive</p>
-<pre><code>&lt;keep-alive&gt;&lt;/keep-alive&gt;包裹动态组件时，会缓存不活动的组件实例,主要用于保留组件状态或避免重新渲染
-</code></pre>
-<p>*hash和history</p>
-<pre><code>两者的设置是在routes中使用mode定义
-hash模式中#后面的数据不会传给服务器，兼容性好，旧的浏览器中也能使用，使用hashchange事件监听url变化
-hash模式中当#后面的hash发生变化,不会导致浏览器向服务器发出请求,浏览器不发出请求就不会刷新页面,并且会触发hasChange这个事件,通过监听hash值的变化来实现更新页面部分内容的操作
-
-history 地址干净，美观，兼容性略差，url后面的数据会发送给服务器进行请求，如果不进行处理，当页面刷新时会报错404
-
-两者的区别
-1.hash模式较丑，history模式较优雅
-2.pushState设置的新URL可以是与当前URL同源的任意URL；而hash只可修改#后面的部分，故只可设置与当前同文档的URL
-3.pushState设置的新URL可以与当前URL一模一样，这样也会把记录添加到栈中；而hash设置的新值必须与原来不一样才会触发记录添加到栈中
-4.pushState通过stateObject可以添加任意类型的数据到记录中；而hash只可添加短字符串
-5.pushState可额外设置title属性供后续使用
-6.hash兼容IE8以上，history兼容IE10以上
-7.history模式需要后端配合将所有访问都指向index.html，否则用户刷新页面，会导致404错误
-</code></pre>
-<p>*路由导航的全过程</p>
-<pre><code>1.导航被触发
-2.离开组件触发beforeRouteLeave守卫
-3.触发全局beforeEach守卫
-4.在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。（如果你的组件是重用的）
-5.在路由配置里调用 beforeEnter。
-6.解析即将抵达的组件。
-7.在即将抵达的组件里调用 beforeRouteEnter。
-8.调用全局的 beforeResolve 守卫 (2.5+)。
-9.导航被确认。
-10.调用全局的 afterEach 钩子。
-11.触发 DOM 更新。
-12.用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
-</code></pre>
-<p>*路由懒加载</p>
-<pre><code>问题：当打包构建应用时，JavaScript 包会变得非常大，影响页面加载。
-</code></pre>
-<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>*浏览器输入url后发生了什么</p>
+<h2 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h2><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>*浏览器输入url后发生了什么</p>
 <pre><code>1.解析url
 2.DNS查询
 3.TCP连接
@@ -1059,7 +666,7 @@ async await
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS"><span class="toc-number">1.1.</span> <span class="toc-text">JS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">1.2.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-number">1.3.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">1.4.</span> <span class="toc-text">浅拷贝与深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue"><span class="toc-number">1.5.</span> <span class="toc-text">Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trim"><span class="toc-number">1.6.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%B4%BE"><span class="toc-number">1.9.</span> <span class="toc-text">事件委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF"><span class="toc-number">1.10.</span> <span class="toc-text">组件通讯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.11.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">1.12.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.13.</span> <span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-number">1.14.</span> <span class="toc-text">ES6</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E7%BB%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">面经学习总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">1.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-number">1.2.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="toc-number">1.3.</span> <span class="toc-text">浅拷贝与深拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trim"><span class="toc-number">1.4.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.5.</span> <span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-number">1.6.</span> <span class="toc-text">ES6</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -1185,11 +792,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">兴趣</a>
+                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">复习总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">兴趣</a>
               </li>
             
             <div class="clearfix"></div>
