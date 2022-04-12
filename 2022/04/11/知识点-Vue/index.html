@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://vuex.vuejs.org/vuex.png">
 <meta property="article:published_time" content="2022-04-11T13:51:54.000Z">
-<meta property="article:modified_time" content="2022-04-11T13:57:25.122Z">
+<meta property="article:modified_time" content="2022-04-12T12:34:54.570Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://vuex.vuejs.org/vuex.png">
@@ -532,6 +532,140 @@ history 地址干净，美观，兼容性略差，url后面的数据会发送给
 <p>*路由懒加载</p>
 <pre><code>问题：当打包构建应用时，JavaScript 包会变得非常大，影响页面加载。
 </code></pre>
+<h2 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h2><h3 id="vite"><a href="#vite" class="headerlink" title="vite"></a>vite</h3><pre><code>vite是新一代前端构建工具
+目前前端构建工具为webpack
+
+优势：
+    1.开发环境中，无需打包操作，可以快速的冷启动
+    2.轻量快速的热重载
+    3.真正的按需编译，不再等待整个应用编译完成
+</code></pre>
+<h3 id="vue3"><a href="#vue3" class="headerlink" title="vue3"></a>vue3</h3><pre><code>main.js中引入的不再是Vue构造函数，而是一个名为createApp的工厂函数
+createApp（App）创建应用实例对象(类似于之前的Vue2中vm，但是比vm更&#39;轻&#39;)
+
+Vue3组件中的模板结构可以没有根标签
+</code></pre>
+<h3 id="常用Composition（组合）API"><a href="#常用Composition（组合）API" class="headerlink" title="常用Composition（组合）API"></a>常用Composition（组合）API</h3><p>*setup  </p>
+<pre><code>组件中所有用到的：数据、方法、生命周期钩子等均配置在setup中
+
+setup函数的两种返回值
+    1.若返回一个对象，则对象中的属性、方法，在模板中均可以直接使用
+    2.若返回一渲染函数：则可以自定义渲染内容
+
+注意点：
+    1.setup的执行时机
+        在beforeCreate之前执行一次，this时undefined
+    2.setup接受的参数
+        props：值为对象，包含组件外部传递过来，且组件内部声明接收的属性
+        context：上下文对象
+            attrs：值为对象，包含组件外部传递过来，单没有在props配置中声明的属性，相当于this.$attrs
+            slots：收到的插槽内容，相当于this.$slots
+            emit：分发自定义事件的函数，相当于this.$emit
+</code></pre>
+<p>*ref</p>
+<pre><code>ref从vue中引入，用于定义一个响应式的数据（引用对象，ref对象）
+参数=ref（初试值），js中操作数据：参数.value
+模板中直接使用参数数据，自身会解析
+
+备注：
+    1.接受的数据类型可以是基本数据类型，也可以是对象类型
+    2.基本数据类型：响应式的方法依然是依靠object.defaultProperty()的get和set完成的
+    3.对象类型的数据：内部&quot;求助&quot;了Vue3.0中的新函数reactive函数
+</code></pre>
+<p>*reactive函数</p>
+<pre><code>用于定义一个对象类型的响应式数据（基本类型不用，要用ref函数）
+const 代理对象=reactive（源对象）接受一个对象/数组，返回一个代理对象（Proxy的实例对象）
+reactive定义的响应数据是深层次的
+内部是基于Proxy实现，通过代理对象操作源对象内部数据进行操作
+</code></pre>
+<p>*Vue2与Vue3中响应式原理</p>
+<pre><code>Vue2中
+    对象类型通过Object.defaultProperty（）对属性的读取、修改进行拦截（数据劫持）
+    数组类型：通过重写数据的一系列方法来实现拦截（对数组的变更发方法进行了包裹）
+存在问题
+    新增属性、删除属性，界面不会更新
+    直接通过下标修改数组，界面不会自动更新
+
+Vue3中
+Proxy，
+    new Proxy(数据，&#123;
+        读取实例的某个属性时调用
+        get(target,propName)&#123;
+            retrun Reflect.get(target,propName)
+        &#125;,
+        修改或增加某个属性的时候调用
+        set(target,propName,value)&#123;
+            Reflect.set(target,propName,value)
+        &#125;,
+        删除某个属性的时候调用
+        deleteProperty(target,propName)&#123;
+            retrun Reflect.deleteProperty(target,propName)
+        &#125;&#125;)
+
+通过Proxy进行代理：拦截对象中任意属性的变化，包括属性值的读写、属性的添加、属性的删除等
+通过Reflect（反射）：对代理对象的属性进行操作
+
+reactive和ref对比
+1.定义角度
+    ref一般定义基本类型
+    reactive定义对象/数组数据类型
+    ref也可以定义对象/数组类型，它内部自动通过reactive转为代理对象
+2.原理角度
+    ref依靠Object.defaultProperty
+    reactive依靠Proxy和Reflect
+3.使用角度
+    读取时ref的类型需要加.value
+    reactive不需要.value
+</code></pre>
+<p>*computed</p>
+<pre><code>从vue中引入computedAPI，然后再setup中使用，对象.新增属性=computed(&#123;计算&#125;)
+</code></pre>
+<p>*watch</p>
+<pre><code>从vue中引入watchAPI，再setup中进行监视，可以书写多个watch，对多个ref进行监视可以使用数组来包裹监视对象，立即监视，可以通过传入第三个值进行操控
+监视reactive定义的响应式数据（全部属性）
+1.无法正确的获取oldVAlue
+2.强制开启了深度监视
+监视reactive中的某个属性，需将属性写成函数（此时deep配置生效，可以开启或关闭）
+监视reactive中的多个属性，将属性写成函数，并将多个函数写在数组中
+</code></pre>
+<h3 id="Vue3生命周期"><a href="#Vue3生命周期" class="headerlink" title="Vue3生命周期"></a>Vue3生命周期</h3><pre><code>初始createApp().mount(el)
+除了修改了beforedistoryed和distoryed，unmount和beforeunmount
+Vue3中提供了组合式API的生命周期钩子
+beforeCreated和created变成了setup
+beforeMount,mounted,beforeunmount,mounted,,updated,beforeupdated变成了
+onBeforeMount,onMounted,onBeforeunmount,onUnmounted,,onUpdated,onBeforeupdated
+</code></pre>
+<p>*hook函数</p>
+<pre><code>本质是一个函数，把setup函数中使用的Compostion API将进行了封装，类似于mixin，
+优势：复用代码，让setup中的逻辑更清楚易懂
+</code></pre>
+<p>*toRef</p>
+<pre><code>  创建一个ref对象，其value值指向另一个对象中的某个属性
+  应用：要间响应式对象中的某个属性单独提供给外部使用时
+  扩展：toRefs和toRef功能一致，但可以批量创建多个ref对象
+</code></pre>
+<p>*readonly和shallowreadonlyg</p>
+<pre><code>只读，只能读取数据，而无法对数据进行操作
+</code></pre>
+<p>*toRaw和markRaw</p>
+<pre><code>toRaw：将一个由reactive生成的响应式对象转为普通对象
+用于读取响应式对象对应的普通对象，对这个普通对象的操作，不会引起页面更新
+
+markRaw
+标记一个对象，使其永远不会再成为响应式对象
+1.有些值不应被设计为响应式的，复杂的第三方库
+2.当渲染具有不可变数据源的大列表时，跳过响应式转换可以提高性能
+</code></pre>
+<p>*provide和inject</p>
+<pre><code>实现祖孙组件之间的通信，祖先组件中用provide来提供数据，子组件inject来接收数据
+</code></pre>
+<p>*响应式数据的判断</p>
+<pre><code>isRef 检查一个值是否为一个ref对象
+isReactive：检查一个对象是否由reactive创建的响应式代理
+isReadonly：检查一个对象是否是由readonly创建的只读代理
+isProxy：判断一个对象是否由reactive或readonly创建的代理
+</code></pre>
+<p>*Fragment组件</p>
 
                       
 
@@ -666,7 +800,7 @@ history 地址干净，美观，兼容性略差，url后面的数据会发送给
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue"><span class="toc-number">1.</span> <span class="toc-text">Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%B4%BE"><span class="toc-number">3.</span> <span class="toc-text">事件委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF"><span class="toc-number">4.</span> <span class="toc-text">组件通讯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">5.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">6.</span> <span class="toc-text">路由</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue"><span class="toc-number">1.</span> <span class="toc-text">Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%B4%BE"><span class="toc-number">3.</span> <span class="toc-text">事件委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF"><span class="toc-number">4.</span> <span class="toc-text">组件通讯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">5.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">6.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue3"><span class="toc-number">7.</span> <span class="toc-text">Vue3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vite"><span class="toc-number">7.1.</span> <span class="toc-text">vite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue3"><span class="toc-number">7.2.</span> <span class="toc-text">vue3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8Composition%EF%BC%88%E7%BB%84%E5%90%88%EF%BC%89API"><span class="toc-number">7.3.</span> <span class="toc-text">常用Composition（组合）API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue3%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">7.4.</span> <span class="toc-text">Vue3生命周期</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
