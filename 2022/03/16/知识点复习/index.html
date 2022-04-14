@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-04-12T14:45:26.414Z">
+<meta property="article:modified_time" content="2022-04-14T03:43:43.916Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -588,6 +588,77 @@ ES6的Object.assign方法
 
 缺点：无法深拷贝map，set
 </code></pre>
+<p>*添加属性中属性值添加的查看模式和编辑模式切换</p>
+<pre><code>查看模式时，显示span
+编辑模式时，显示input
+注意：通过flag标记切换查看模式与编辑模式，要注意的是，一个属性的flag没办法控制全部属性值得切换
+解决方法
+    给每一个属性值添加一个标记flag，用户切换查看模式与编辑模式，好处，每一个属性值可以控制自己得模型切换
+
+失去焦点时的注意事项
+    当失去焦点时要对输入框中输入的信息进行判断
+    1.如果全为空字符串，要报错提示
+    2.如果输入内容前面有多个空字符串，需要去掉空格
+    3.新增的属性值不能与已有的属性值重复，要过滤，使用some
+        新增的属性值与前面的属性值进行比较，如果重复则去除或者提醒用户已重复，没有则添加如属性值数组中
+    
+
+点击span后自动聚焦，点击添加属性值按钮后，新的输入框也需要自动聚焦
+    1.需要获取到聚焦的输入框，这需要知道点击的索引值，使用ref来定位
+    2.数据发生变化后视图要跟着变化，因为重绘重排需要事件，页面不会立即发生变化，使用nextTick来完成
+</code></pre>
+<p>*保存按钮   </p>
+<pre><code>    当点击按钮后，需要将收集到的属性数据提给服务器
+    在提交给服务器时，需要对数据进行整理
+        1.如果用户添加多属性值，且属性值名为空的不应该提交给服务器
+        2.提交给服务器的数据不应该出现flag字段
+</code></pre>
+<h3 id="Spu管理（标准化产品单元）"><a href="#Spu管理（标准化产品单元）" class="headerlink" title="Spu管理（标准化产品单元）"></a>Spu管理（标准化产品单元）</h3><p>*照片前图片的收集  </p>
+<pre><code>何时收集数据
+    照片墙在删除图片的时候
+    照片墙在添加图片的时候
+</code></pre>
+<h3 id="Sku管理（库存量单位）"><a href="#Sku管理（库存量单位）" class="headerlink" title="Sku管理（库存量单位）"></a>Sku管理（库存量单位）</h3><p>*深度选择器</p>
+<pre><code>1.scoped属性的作用--scoped的作用是只是对于当前的组件有用（样式）
+对于某一个组件，如果style标签添加了scoped属性，给当前子组件的结构中都添加上了data_v_xxx的自定义属性
+Vue是通过属性选择器来给元素添加样式的
+
+2.子组件的根标签（拥有父组件当中自定义属性：一样的），如果子组件的根节点，和父组件中书写的样式相同，也会添加上相应的样式
+</code></pre>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><pre><code>HTML5中canvas标签任何操作必须通过JS完成
+使用JS中getContext来进行绘图
+storke方法绘制
+clearRect清除画布
+
+SVG元素，HTML5新特性，基于XML的图像文件格式，可缩放的矢量图形
+使用的是标签在svg标签中绘制
+
+Echarts
+基于js的开源可视化图表库
+初始化echarts实例echarts.init（）
+图表的配置项与数据
+    echarts实例.setOption（&#123;
+    配置内容
+    title:&#123;
+        标题
+    &#125;
+    x轴
+    xAxis:&#123;
+        data:[]
+    &#125;，
+    y轴配置
+    yAxis:&#123;
+
+    &#125;,
+    系列的设置，绘制什么样类型的图标、数据的展示再这里设置
+    series:[&#123;
+        name：图标名字
+        type：类型
+        
+
+    &#125;]
+    &#125;）
+</code></pre>
 
                       
 
@@ -731,7 +802,7 @@ ES6的Object.assign方法
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-x2F-%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">登录&#x2F;注册页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E7%99%BB%E5%BD%95%E7%9A%84%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.7.</span> <span class="toc-text">未登录的路由导航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%90%8E%E4%B8%8D%E8%83%BD%E5%8E%BB%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2%E5%92%8C%E6%94%AF%E4%BB%98%E6%88%90%E5%8A%9F%E9%A1%B5%E9%9D%A2%EF%BC%88%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%EF%BC%89"><span class="toc-number">1.3.8.</span> <span class="toc-text">用户登录后不能去支付页面和支付成功页面（路由独享）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.9.</span> <span class="toc-text">图片懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.10.</span> <span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E4%BF%AE%E9%A5%B0%E7%AC%A6sync"><span class="toc-number">1.3.11.</span> <span class="toc-text">属性修饰符sync</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios"><span class="toc-number">1.3.12.</span> <span class="toc-text">axios</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Webpack"><span class="toc-number">1.3.13.</span> <span class="toc-text">Webpack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.</span> <span class="toc-text">后台管理系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%88%97%E8%A1%A8%E7%9A%84%E5%8A%A8%E6%80%81%E5%B1%95%E7%A4%BA"><span class="toc-number">1.4.1.</span> <span class="toc-text">三级列表的动态展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7%E5%92%8C%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.2.</span> <span class="toc-text">添加属性和修改属性的实现</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Vue电商项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mock"><span class="toc-number">1.1.1.</span> <span class="toc-text">mock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="toc-number">1.1.2.</span> <span class="toc-text">轮播图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">组件通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex"><span class="toc-number">1.1.4.</span> <span class="toc-text">Vuex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Search%E7%BB%84%E4%BB%B6%E4%B8%AD"><span class="toc-number">1.1.5.</span> <span class="toc-text">Search组件中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">分页器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E4%BA%A7%E5%93%81"><span class="toc-number">1.3.</span> <span class="toc-text">购买产品</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%89%E9%92%AE%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">详情页面中通过按钮和输入框产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">详情页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E5%AE%A2%E8%BA%AB%E4%BB%BD%E8%8E%B7%E5%8F%96%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">游客身份获取购物车数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%A4%84%E7%90%86%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">购物车处理产品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-x2F-%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="toc-number">1.3.6.</span> <span class="toc-text">登录&#x2F;注册页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E7%99%BB%E5%BD%95%E7%9A%84%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><span class="toc-number">1.3.7.</span> <span class="toc-text">未登录的路由导航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%90%8E%E4%B8%8D%E8%83%BD%E5%8E%BB%E6%94%AF%E4%BB%98%E9%A1%B5%E9%9D%A2%E5%92%8C%E6%94%AF%E4%BB%98%E6%88%90%E5%8A%9F%E9%A1%B5%E9%9D%A2%EF%BC%88%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%EF%BC%89"><span class="toc-number">1.3.8.</span> <span class="toc-text">用户登录后不能去支付页面和支付成功页面（路由独享）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.9.</span> <span class="toc-text">图片懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.3.10.</span> <span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E4%BF%AE%E9%A5%B0%E7%AC%A6sync"><span class="toc-number">1.3.11.</span> <span class="toc-text">属性修饰符sync</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios"><span class="toc-number">1.3.12.</span> <span class="toc-text">axios</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Webpack"><span class="toc-number">1.3.13.</span> <span class="toc-text">Webpack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.</span> <span class="toc-text">后台管理系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%88%97%E8%A1%A8%E7%9A%84%E5%8A%A8%E6%80%81%E5%B1%95%E7%A4%BA"><span class="toc-number">1.4.1.</span> <span class="toc-text">三级列表的动态展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7%E5%92%8C%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.2.</span> <span class="toc-text">添加属性和修改属性的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spu%E7%AE%A1%E7%90%86%EF%BC%88%E6%A0%87%E5%87%86%E5%8C%96%E4%BA%A7%E5%93%81%E5%8D%95%E5%85%83%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">Spu管理（标准化产品单元）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sku%E7%AE%A1%E7%90%86%EF%BC%88%E5%BA%93%E5%AD%98%E9%87%8F%E5%8D%95%E4%BD%8D%EF%BC%89"><span class="toc-number">1.4.4.</span> <span class="toc-text">Sku管理（库存量单位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.4.5.</span> <span class="toc-text">数据可视化</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
