@@ -16,7 +16,7 @@
 <meta property="og:description" content="复习">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-16T12:08:54.000Z">
-<meta property="article:modified_time" content="2022-04-14T03:43:43.916Z">
+<meta property="article:modified_time" content="2022-05-22T11:50:52.508Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
   
@@ -314,6 +314,7 @@ Vue中scrollBehavior方法
     &#123;selector:string,offset?:&#123;x:number,y:number&#125;&#125;
     如果返回一个false值或空对象，则页面不发生滚动
 </code></pre>
+<p>​    </p>
 <h3 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h3><pre><code>在点击添加购物车时，要向服务器发送数据进行存储，服务器没有返回多余的数据，通过服务器显示添加购物车成功，因此仓库store不需要三连环，只在action写就行。发送的数据需要携带商品id(由之前的路由跳转传入$route.param.skuid)和商品数量
 因为没有三连环，所有调用store的action没有返回值给组件
 因为asycn await返回的是一个promise，通过判断是否成功存储数据库成功返回值，如果成功则返回ok，不成功返回一个失败的promise，在组件处使用try，catch方法来进行判断。
@@ -601,7 +602,7 @@ ES6的Object.assign方法
     2.如果输入内容前面有多个空字符串，需要去掉空格
     3.新增的属性值不能与已有的属性值重复，要过滤，使用some
         新增的属性值与前面的属性值进行比较，如果重复则去除或者提醒用户已重复，没有则添加如属性值数组中
-    
+
 
 点击span后自动聚焦，点击添加属性值按钮后，新的输入框也需要自动聚焦
     1.需要获取到聚焦的输入框，这需要知道点击的索引值，使用ref来定位
@@ -653,10 +654,7 @@ Echarts
     系列的设置，绘制什么样类型的图标、数据的展示再这里设置
     series:[&#123;
         name：图标名字
-        type：类型
-        
-
-    &#125;]
+        type：类型    &#125;]
     &#125;）
 </code></pre>
 

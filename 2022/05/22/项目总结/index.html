@@ -8,15 +8,19 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>项目总结 | Mr.Xu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="此篇用于对实战项目进行复盘">
+<meta property="og:type" content="article">
 <meta property="og:title" content="项目总结">
 <meta property="og:url" content="http://example.com/2022/05/22/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Mr.Xu&#39;s Blog">
+<meta property="og:description" content="此篇用于对实战项目进行复盘">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5f9936d9914c4aefaa90b20866ba0219.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5q-b5q-b6Jmr5ZGc5ZGc,size_20,color_FFFFFF,t_70,g_se,x_16">
 <meta property="article:published_time" content="2022-05-22T03:21:27.000Z">
-<meta property="article:modified_time" content="2022-05-22T03:21:27.368Z">
+<meta property="article:modified_time" content="2022-05-22T11:50:09.232Z">
 <meta property="article:author" content="Mr.Xu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/5f9936d9914c4aefaa90b20866ba0219.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5q-b5q-b6Jmr5ZGc5ZGc,size_20,color_FFFFFF,t_70,g_se,x_16">
   
     <link rel="alternative" href="/atom.xml" title="Mr.Xu&#39;s Blog" type="application/atom+xml">
   
@@ -198,7 +202,277 @@
       
         <div class="article-entry" itemprop="articleBody">
           
-                    
+                    <p>此篇用于对实战项目进行复盘</p>
+<span id="more"></span>
+
+<h2 id="第一个项目：基于Vue框架的电商网站的项目开发"><a href="#第一个项目：基于Vue框架的电商网站的项目开发" class="headerlink" title="第一个项目：基于Vue框架的电商网站的项目开发"></a>第一个项目：基于Vue框架的电商网站的项目开发</h2><p>是一个用来对所学知识进行巩固的项目 。此项目主要完成的成果：仿照某电商网站搭建了电商平台，完成了平台主页面的展示（包括商品分类的展示、商品图片的轮播图等)，实现了注册登录的功能，以及后续的添加购物车、购物车数据展示和支付信息的页面功能。</p>
+<p>项目中采用的技术方案：使用Vue-cli脚手架来构建基本框架，使用Vue-router实现单页面的跳转，以及跳转权限的设置；使用Vuex和axios实现与后端的数据交互，并使用了webpack对项目进行打包优化。</p>
+<p>过程中技术难点：编程式导航+事件委托实现路由跳转，导航守卫（鉴权功能），路由独享守，路由懒加载</p>
+<h3 id="首页展示："><a href="#首页展示：" class="headerlink" title="首页展示："></a>首页展示：</h3><p>底部组件的显示和隐藏使用了v-show并配合了路由中配置的元信息meta来进行显示条件的判断</p>
+<p>全部商品分类，属于一个三级联动组件</p>
+<h3 id="对请求接口统一封装"><a href="#对请求接口统一封装" class="headerlink" title="对请求接口统一封装"></a>对请求接口统一封装</h3><p>对axios将进行了二次封装，引入了nprogress进度条插件，其目的是对页面发送请求的一种展示，当发送请求时开启进度条，在请求成功后关闭进度条。</p>
+<p>此部分中后续还对请求拦截器进行了配置，为了完成商品添加购物车以及鉴权功能，需要在请求拦截器中向请求头中添加字段(后端已经写好的请求头)来将信息携带发给服务器。</p>
+<p>创建了一个api文件夹，用来封装所有请求，将每一个请求封装为一个函数，并暴露出去，组件只需要引入API文件夹，并调用相应的函数即可。（这样做的目的是防接口比较多时，需要修改时只需要修改该文件夹即可）</p>
+<p>在vuex中对引入的api的接口，在使用时要通过async、await来进行异步的操作，因为api中引入的函数都是promise对象，因此都是异步执行的，按照事件循环的执行顺序，主程序会先被执行，此时如果不对其进行异步操作，则结果会出错，只有先执行了api中的引入函数才可以获取到正确的结果。</p>
+<h3 id="防抖节流"><a href="#防抖节流" class="headerlink" title="防抖节流"></a>防抖节流</h3><p>在完成三级联动组件中鼠标悬浮进行导航条的选取、以及搜索框和后续的购物车商品数据点击增减的操作中，考虑到防抖节流。项目中使用了loadsh插件来完成防抖节流的操作。</p>
+<h3 id="编程式导航-事件委托实现路由跳转"><a href="#编程式导航-事件委托实现路由跳转" class="headerlink" title="编程式导航+事件委托实现路由跳转"></a>编程式导航+事件委托实现路由跳转</h3><p>在三级标签列表中，每一个标签都是一个页面的链接，要实现点击进行路由跳转。</p>
+<p>使用导航式路由，则有多少了a标记就需要生成多少个router-link，这样的设置在频繁操作时会出现卡顿现象</p>
+<p>使用编程式路由，通过触发点击事件实现路由跳转，有多少个a标签就会有多少个触发函数。虽然不会出现卡顿，但会影响性能</p>
+<p>上面两种方法无论采用哪一种，都会影响性能。我们提出一种：编程时导航+事件委派 的方式实现路由跳转。事件委派即把子节点的触发事件都委托给父节点。这样只需要一个回调函数goSearch就可以解决。<br>事件委派问题：<br>（1）如何确定我们点击的一定是a标签呢？如何保证我们只能通过点击a标签才跳转呢？<br>（2）如何获取子节点标签的商品名称和商品id(我们是通过商品名称和商品id进行页面跳转的)</p>
+<p>解决方法：<br>对于问题1：为三个等级的a标签添加自定义属性date-categoryName绑定商品标签名称来标识a标签（其余的标签是没有该属性的）。</p>
+<p>对于问题2：为三个等级的a标签再添加自定义属性data-category1Id、data-category2Id、data-category3Id来获取三个等级a标签的商品id，用于路由跳转。<br>我们可以通过在函数中传入event参数，获取当前的点击事件，通过event.target属性获取当前点击节点，再通过dataset属性获取节点的属性信息。</p>
+<h3 id="轮播图使用swiper插件来完成"><a href="#轮播图使用swiper插件来完成" class="headerlink" title="轮播图使用swiper插件来完成"></a>轮播图使用swiper插件来完成</h3><p>解决mounted页面挂载完毕后，swiper无法获取轮播图图片数据，实现轮播效果(vuex中时异步任务，若直接将轮播操作放在mounted中，轮播的数据无法获取到)</p>
+<p>(1)在mounted中使用延迟器（setTimeout，等2秒后执行swiper的轮播操作）(不完美，会有延迟的时间)</p>
+<p>(2)使用watch监听数据变化+$nextTick，<br>    对象写法：需使用handler(newValue,oldValue){<br>        此时只能保证已经有数据了，但不能保证数据执行结束<br>    }</p>
+<p>   $nextTick(回调函数)将回调函数延迟到DOM更新循环后执行。在修改数据后立即执行它，然后等待DOM更新</p>
+<h3 id="利用路由信息变化实现动态搜索"><a href="#利用路由信息变化实现动态搜索" class="headerlink" title="利用路由信息变化实现动态搜索"></a>利用路由信息变化实现动态搜索</h3><p>最初想法：在每个三级列表和收缩按钮加一个点击触发事件，只要点击了就执行搜索函数。<br>这是一个很蠢的想法，如果这样就会生成很多回调函数，很耗性能。<br>最佳方法：我们每次进行新的搜索时，我们的query和params参数中的部分内容肯定会改变，而且这两个参数是路由的属性。我们可以通过监听路由信息的变化来动态发起搜索请求。</p>
+<h3 id="商品排序"><a href="#商品排序" class="headerlink" title="商品排序"></a>商品排序</h3><p>排序的逻辑比较简单，只是改变一下请求参数中的order字段，后端会根据order值返回不同的数据来实现升降序。<br>order属性值为字符串，例如‘1：asc’、‘2：desc’。1代表综合，2代表价格，asc代表升序，desc代表降序。</p>
+<h3 id="手写分页器"><a href="#手写分页器" class="headerlink" title="手写分页器"></a>手写分页器</h3><p>实际开发中是不会手写的，一般都会用一些开源库封装好的分页，比如element ui。但是这个知识还是值得学习一下的。<br>核心属性：<br>pageNo（当前页码）、pageSize、total、continues（连续展示的页码）<br>核心逻辑是获取连续页码的起始页码和末尾页码，通过计算属性获得。（计算属性如果想返回多个数值，可以通过对象形式返回）</p>
+<p>分页器的展示需要哪些数据</p>
+<pre><code>1、当前页的位置
+2、所展示数据的总数
+3、每页需要展示的数据条数
+4、连续页码的个数，一般为5、7
+</code></pre>
+<p>分页器组件(设置为全局组件)</p>
+<pre><code>数据从父组件传给子组件，使用props进行通信
+</code></pre>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连续页码的起始页码、末尾页码</span></span><br><span class="line">  <span class="title function_">startNumAndEnd</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> start = <span class="number">0</span> , end = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//规定连续页码数字5（totalPage至少5页）</span></span><br><span class="line">    <span class="comment">//不正常现象</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">continues</span> &gt; <span class="variable language_">this</span>.<span class="property">totalPage</span>)&#123;</span><br><span class="line">      start = <span class="number">1</span></span><br><span class="line">      end = <span class="variable language_">this</span>.<span class="property">totalPage</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="comment">//正常现象      Math.floor:想下取整</span></span><br><span class="line">      start = <span class="variable language_">this</span>.<span class="property">pageNo</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="variable language_">this</span>.<span class="property">continues</span>/<span class="number">2</span>)</span><br><span class="line">      end = <span class="variable language_">this</span>.<span class="property">pageNo</span> + <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="variable language_">this</span>.<span class="property">continues</span>/<span class="number">2</span>)</span><br><span class="line">      <span class="comment">//start出现不正常现象纠正</span></span><br><span class="line">      <span class="keyword">if</span>(start &lt; <span class="number">1</span>)&#123;</span><br><span class="line">        start = <span class="number">1</span></span><br><span class="line">        end = <span class="variable language_">this</span>.<span class="property">continues</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//end出现不正常现象纠正</span></span><br><span class="line">      <span class="keyword">if</span>(end &gt; <span class="variable language_">this</span>.<span class="property">totalPage</span>)&#123;</span><br><span class="line">        end = <span class="variable language_">this</span>.<span class="property">totalPage</span></span><br><span class="line">        start = <span class="variable language_">this</span>.<span class="property">totalPage</span> - <span class="variable language_">this</span>.<span class="property">continues</span> + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;start,end&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当点击页码会将pageNo传递给父组件，然后父组件发起请求，最后渲染。这里还是应用通过自定义事件实现子组件向父组件传递信息。</p>
+<h3 id="商品详情中的难点：点击轮播图图片时，改变放大镜组件展示的图片"><a href="#商品详情中的难点：点击轮播图图片时，改变放大镜组件展示的图片" class="headerlink" title="商品详情中的难点：点击轮播图图片时，改变放大镜组件展示的图片"></a>商品详情中的难点：点击轮播图图片时，改变放大镜组件展示的图片</h3><p>在轮播图组件中设置一个currendIndex，用来记录所点击图片的下标，并用currendIndex实现点击图片高亮设置。当符合图片的下标满足<code>currentIndex===index</code>时，该图片就会被标记为选中。</p>
+<p>轮播图组件和放大镜组件是兄弟组件，所以要通过全局总线通信。<br>在轮播图组件中，点击图片触发全局事件changeImg，参数为图片所在数组的下标。</p>
+<p>对应的放大镜组件，首先在mounted监听该全局事件<br>放大镜组件中也会有一个currentIndex，他用表示大图中显示的图片的下标（因为放大镜组件只能显示一张图片），全局事件传递的index赋值给currentIndex ，通过computed计算属性改变放大镜组件展示的图片下标。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40758850/article/details/89445629">js实现放大器</a></p>
+<h3 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h3><p>点击加入购物车时，会向后端发送API请求，但是该请求的返回值中data为null，所以我们只需要根据状态码code判断是否跳转到‘加入购物车成功页面’。</p>
+<p>当我们想要实现两个毫无关系的组件传递数据时，首相想到的就是路由的query传递参数，但是query适合传递单个数值的简单参数，所以如果想要传递对象之类的复杂信息，就可以通过Web Storage实现。</p>
+<p>sessionStorage、localStorage概念：<br>sessionStorage：为每一个给定的源维持一个独立的存储区域，该区域在页面会话期间可用（即只要浏览器处于打开状态，包括页面重新加载和恢复）。<br>localStorage：同样的功能，但是在浏览器关闭，然后重新打开后数据仍然存在。<br>注意：无论是session还是local存储的值都是字符串形式。如果我们想要存储对象，需要在存储前JSON.stringify()将对象转为字符串，在取数据后通过JSON.parse()将字符串转为对象。</p>
+<p>如果想要获取详细信息，还需要一个用户的uuidToken，用来验证用户身份。但是该请求函数没有参数，所以我们只能把uuidToken加在请求头中。</p>
+<p>此时因为还没有开发登录注册功能，因此后面使用的token还无法使用，后续可以使用token来替换掉uuid</p>
+<p><strong>个人疑问</strong>： 在最后一步更新商品信息时，我最初的想法时使用<code>this.$router.push(&#39;/shopcart&#39;)</code>实现。因为，我们shopcart页面的mounted会去获取商品信息。当路由跳转时会执行mounted的内容，实现商品数据信息更新。</p>
+<p>但是这样做不会更新商品数据，个人猜测原因是：因为我要跳往的路由和当前路由相同，并且路由参数没有改变，所以他就不会跳转。或者是会跳转。但是，因为路由信息没有变化，所以不会执行mounted函数。</p>
+<p>后来经过查验和询问相关专业的，这可能涉及了浏览器的缓存机制，强缓存，重新跳转相同的页面则会对页面刷新</p>
+<h3 id="注册登录业务"><a href="#注册登录业务" class="headerlink" title="注册登录业务"></a>注册登录业务</h3><p><strong>注</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于登录按钮的父节点是一个form表单，如果使用@click触发登录事件，form表单会执行默认事件action实现页面跳转。这里我们使用@click.prevent，它可以阻止自身默认事件的执行。</span><br></pre></td></tr></table></figure>
+
+<pre><code>1.登录与注册页面的静态组件
+2.在assset文件夹中放置全部组件共用的静态资源
+3.在样式当中也可以用@符号【src别名】，切记要在前面加上~
+</code></pre>
+<p>*表单验证</p>
+<pre><code>1.正则表达式
+2.vee-validate插件
+</code></pre>
+<p>*获取验证码的逻辑</p>
+<pre><code>给手机号输入框绑定双向绑定，点击获取验证码按钮时，先判断获取的手机号格式是否正确，如果正确则向服务器发送请求，同时带上手机号，并弹出已发送字样，如果如果手机号格式不正确则报错。
+验证码输入框也需要设为双向绑定，
+</code></pre>
+<p>*登录业务【Token】</p>
+<pre><code>需要收集用户信息（手机号，密码）
+click.prevent修饰符，拦截默认事件，passive不拦截默认事件
+
+登录成功的时候，后台为了区分用户是谁，服务器下发了Token（令牌），Token不是自己造的，而是服务器下发的唯一标识。
+登录接口做的不完美，一般公司中登录时只会给Token，用户信息一般不会给出，而是根据token向服务器索要信息。【前台持久化存储token】
+
+Vuex存储数据不是持久化的，一刷新数据就会消失
+采用会话存储来进行存储
+
+登录的路由组件：看路由当中是否包含query参数，有：跳到query参数指定路由，没有：跳到/home主页面
+
+存在问题1：多个组件展示用户信息需要在每一个组件的mounted中发出this.dispatch(&#39;sdafa &#39;)不行
+
+存在问题2：用户已经登录了，就不应该再回到登录页面
+解决方法
+    导航守卫
+    导航：表示路由正在发生变化
+    守卫：相当于判断条件，紫禁城的护卫
+
+    全局守卫：项目中，只要发生路由变化，守卫就能监听到
+        1.全局前置守卫
+            router（实例对象）.beforeEach((to,from,next)=&gt;&#123;
+                //to：可以获取到你要跳转到哪个路由的信息
+                //path：可以获取到你从哪个路由而来的信息
+                //next：放行函数 next（）放行
+                //next(&#39;指定路由&#39;)放行到指定路由
+                //next(false)中断当前的导航，如果浏览器的url发生变化了（手动或浏览器回退按钮），那么URL会重置到from路由对应的地址
+            &#125;)
+        2.全局解析守卫
+        3.全局后置钩子
+
+    路由独享守卫
+
+    组件内守卫
+    在组件内书写
+    不能获取组件实例this
+    在渲染该组件的对应路由被confirm前调用
+        beforeRouteEnter(to,from,next)=&gt;&#123;
+
+        &#125;
+        beforeRouteUpdate
+        beforeRouteLeave
+</code></pre>
+<p>*退出登录</p>
+<pre><code>1.需要发送请求，通知服务器退出登录【清除一些数据;token】
+2. 清除项目中的数据【user Info、token】
+3.点击退出后要路由要跳转到首页
+</code></pre>
+<p><strong>路由导航守卫</strong></p>
+<p>为什么要判断name？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为store中的token是通过localStorage获取的，token有存放在本地。当页面刷新时，本地token不会消失，所以store中的token也不会消失。但是，store中的其他数据（用户信息等）会清空，此时会出现用户信息不存在，但是有token，这种情况是不可以访问其他页面的，必须先去获取用户信息。由于用户信息是一个对象，所以我们通过它的一个属性name判断用户信息是否存在。</span><br><span class="line">所以不仅要判断token,还要判断用户信息</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/5f9936d9914c4aefaa90b20866ba0219.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5q-b5q-b6Jmr5ZGc5ZGc,size_20,color_FFFFFF,t_70,g_se,x_16" alt="image"></p>
+<h3 id="路由独享守卫"><a href="#路由独享守卫" class="headerlink" title="路由独享守卫"></a>路由独享守卫</h3><p>全局导航守卫已经帮助我们限制未登录的用户不可以访问相关页面。但是还会有一个问题。<br>例如：</p>
+<p>用户已经登陆，用户在home页直接通过地址栏访问trade结算页面，发现可以成功进入该页面，正常情况，用户只能通过在shopcart页面点击去结算按钮才可以到达trade页面。我们可以通过路由独享守卫解决该问题</p>
+<p>路由独享的守卫：只针对一个路由的守卫，所以该守卫会定义在某个路由中。<br>以上面问题为例，我们可以通过路由独享的守卫解决。<br>在trade路由信息中加入路由独享守卫协议，转载请附上原文出处链接及本声明。</p>
+<p><strong>仍存在问题：</strong></p>
+<p>当我们在shopcart页面通过地址栏访问trade时还是会成功。正常情况应该是只有当我们点击<strong>去结算按钮</strong>后才可以进入到trade页面。当我们在shopcart页面通过地址栏访问trade时还是会成功。正常情况应该是只有当我们点击<strong>去结算按钮</strong>后才可以进入到trade页面。</p>
+<p>解决思路：在shopcart路由信息<strong>meta</strong>中加一个<strong>flag</strong>，初始值为false。当点击去结算按钮后，将flag置为true。在trade的独享路由守卫中判断一下flag是否为true，当flag为true时，代表是通过点击去结算按钮跳转的，所以就放行。</p>
+<h3 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h3><pre><code>使用vue-lazyload插件
+Vue.use（vueLazyload，&#123;
+loading：图片url&#125;）
+在使用v-lazy
+</code></pre>
+<h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><pre><code>将路由对应的组件进行分割，只有当路由被访问的时候才加载对应组件
+
+直接component：()=&gt;import&#123;&#39;&#39;&#125;
+</code></pre>
+<h2 id="第二个项目：基于Vue框架和Element-UI的后台管理系统项目"><a href="#第二个项目：基于Vue框架和Element-UI的后台管理系统项目" class="headerlink" title="第二个项目：基于Vue框架和Element-UI的后台管理系统项目"></a>第二个项目：基于Vue框架和Element-UI的后台管理系统项目</h2><p>这个项目是基于了</p>
+<p>项目成果:完成了登录&#x2F;退出的功能，实现信息列表的动态展示，以及他添加修改删除等功能，权限登录和权限页面展示，对后台数据的数据可视化</p>
+<p>技术方案：采用Vue-cli构建基础框架，Element-UI构建前端页面，使用vue-router实行SPA页面的路由跳转，以及结合Vuex来实现权限登录等功能，使用axios实现与后端的数据交换，使用Echart实现数据可视化。</p>
+<p>技术难点：</p>
+<p>路由懒加载，权限设置，以及权限页面展示，Echart动态展示后台数据</p>
+<h3 id="三级列表的动态展示"><a href="#三级列表的动态展示" class="headerlink" title="三级列表的动态展示"></a>三级列表的动态展示</h3><pre><code>只有选择前一个等级才可以进行后一个等级选择，只有当三个等级都选择了，才会展示数据信息
+当前面的等级修改了，后面的所有等级都要清零，数据也会消失
+</code></pre>
+<h3 id="添加属性和修改属性的实现"><a href="#添加属性和修改属性的实现" class="headerlink" title="添加属性和修改属性的实现"></a>添加属性和修改属性的实现</h3><pre><code>当点击添加属性按钮和修改属性按钮，页面会展示属性信息的信息，当关闭后会对总的属性表格的展示。通过数据的true和false，结合v-show进行显示与隐藏
+
+添加属性（在点击添加属性或者点击取消的时候，之前填写的内容要清空）
+    1.收集属性名 （v-model进行收集）
+    2.收集属性值 （属性值有多个，用数组记载，每一个属性值都是一个对象，需要id和名字）
+    3.点击保存，向服务器发请求，将添加的属性数据发送给服务器，并向服务器请求数据重新展示属性数据
+
+修改某一属性
+    1.将选中的属性赋值给属性页面的数据
+    2.由于数据结构中存在对象里面套用引用数据类型，因此要使用深拷贝解决问题
+    解决方法：lodash下的cloneDeep深拷贝
+</code></pre>
+<p>*引申<br>     浅拷贝和深拷贝</p>
+<pre><code> 浅拷贝：
+    拷贝对象为基本类型时，浅拷贝会将值传递，赋值给新对象的成员变量，两者互不关联
+    拷贝对象为引用类型时，浅拷贝会将该变量的地址给新成员的成员变量，他们指向同一空间
+
+手写浅拷贝
+ [数组]   cosnt copy=funciton(arr)&#123;
+      let newArr=[]
+      for(let v of arr)&#123;
+          newArr.push(v)
+      &#125;  
+      return new Arr
+    &#125;
+
+ 使用slice方法
+    let arr=[1,23,3]
+    let arr2=arr.slice()
+
+使用concat方法
+    let arr=[1,23,3]
+    let arr2=arr.concat()
+
+使用扩展运算符
+    let arr2=[...arr1]
+
+[对象]  cosnt copy=funciton(obj)&#123;
+      let newObj=&#123;&#125;
+      for(let i in arr)&#123;
+          newObj[i]=obj[i]
+      &#125;  
+      return newObj
+    &#125;
+
+ES6的Object.assign方法
+    Object.assign(newObj,obj)
+    将obj拷贝到newObj中
+
+使用扩展运算符
+    let arr2=&#123;...arr1&#125;
+
+深拷贝
+    拷贝的对象是引用类型时，深拷贝将会为新对象的成员变量开辟新的内存空间，新旧对象的成员变量指向不同的内存空间
+
+手写深拷贝
+
+    利用JSON的转换
+       let obj= JSON.parse(JSON.stringify(obj))
+
+    let obj = &#123;code:200,list:[1,2,3,4]&#125;
+
+    function deepClone(obj=&#123;&#125;) &#123;
+        // 首先判断是：基本数据类型 还是 引用数据类型
+        if(typeof obj != &#39;object&#39; || obj == null) &#123;
+            return obj
+        &#125;
+        // 其次区分是数组还是对象
+        let result =obj instanceof Array ?[]:&#123;&#125;
+        // 最后进行遍历
+        for(let key in obj) &#123;
+            // 如果是原型上的属性，初始化的时候就存在了，所以要保证key         不是原型上的属性
+            // hasOwnProperty()判断是不是它自身的属性,返回布尔值
+            if(obj.hasOwnProperty(key)) &#123;   
+                result[key] = deepClone(obj[key])   // 递归
+            &#125;
+        &#125;
+        // 返回结果
+        return result
+    &#125;
+
+缺点：无法深拷贝map，set
+</code></pre>
+<p>*添加属性中属性值添加的查看模式和编辑模式切换</p>
+<pre><code>查看模式时，显示span
+编辑模式时，显示input
+注意：通过flag标记切换查看模式与编辑模式，要注意的是，一个属性的flag没办法控制全部属性值得切换
+解决方法
+    给每一个属性值添加一个标记flag，用户切换查看模式与编辑模式，好处，每一个属性值可以控制自己得模型切换
+
+失去焦点时的注意事项
+    当失去焦点时要对输入框中输入的信息进行判断
+    1.如果全为空字符串，要报错提示
+    2.如果输入内容前面有多个空字符串，需要去掉空格
+    3.新增的属性值不能与已有的属性值重复，要过滤，使用some
+        新增的属性值与前面的属性值进行比较，如果重复则去除或者提醒用户已重复，没有则添加如属性值数组中
+
+
+点击span后自动聚焦，点击添加属性值按钮后，新的输入框也需要自动聚焦
+    1.需要获取到聚焦的输入框，这需要知道点击的索引值，使用ref来定位
+    2.数据发生变化后视图要跟着变化，因为重绘重排需要事件，页面不会立即发生变化，使用nextTick来完成
+</code></pre>
+<p>*保存按钮   </p>
+<pre><code>    当点击按钮后，需要将收集到的属性数据提给服务器
+    在提交给服务器时，需要对数据进行整理
+        1.如果用户添加多属性值，且属性值名为空的不应该提交给服务器
+        2.提交给服务器的数据不应该出现flag字段
+</code></pre>
+<h3 id="Spu管理（标准化产品单元）"><a href="#Spu管理（标准化产品单元）" class="headerlink" title="Spu管理（标准化产品单元）"></a>Spu管理（标准化产品单元）</h3><p>*照片前图片的收集  </p>
+<pre><code>何时收集数据
+    照片墙在删除图片的时候
+    照片墙在添加图片的时候
+</code></pre>
+<h3 id="Sku管理（库存量单位）"><a href="#Sku管理（库存量单位）" class="headerlink" title="Sku管理（库存量单位）"></a>Sku管理（库存量单位）</h3><p>*深度选择器</p>
+<pre><code>1.scoped属性的作用--scoped的作用是只是对于当前的组件有用（样式）
+对于某一个组件，如果style标签添加了scoped属性，给当前子组件的结构中都添加上了data_v_xxx的自定义属性
+Vue是通过属性选择器来给元素添加样式的
+
+2.子组件的根标签（拥有父组件当中自定义属性：一样的），如果子组件的根节点，和父组件中书写的样式相同，也会添加上相应的样式
+</code></pre>
+<h3 id="权限页面展示"><a href="#权限页面展示" class="headerlink" title="权限页面展示"></a>权限页面展示</h3><p>在管理员给每个角色分配好角色后，使用该角色的账号进行登录时，管理系统会分别展示不同的页面内容（页面权限）</p>
+<p>对路由进行分类：常量路由和异步路由</p>
+<p>常量路由:就是不关用户是什么角色，都可以看见的路由 &#x2F;&#x2F;什么角色（超级管理员，普通员工）：登录、404、首页</p>
+<p>异步路由：不同的用户（角色），需要过滤筛选出的路由，称之为异步路由，根据用户拥有的权限进行分配</p>
+<p>先咋路由文件中进行分类</p>
+<p>再在store文件中通过token来进行权限的判断，根据拥有的权限在actions中来过滤异步路由，最后在mutation中进行常量路由和异步路由的合并并添加到路由器（路由配置）中</p>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">HTML5中canvas标签任何操作必须通过JS完成</span><br><span class="line">使用JS中getContext来进行绘图</span><br><span class="line">storke方法绘制</span><br><span class="line">clearRect清除画布</span><br><span class="line"></span><br><span class="line">SVG元素，HTML5新特性，基于XML的图像文件格式，可缩放的矢量图形</span><br><span class="line">使用的是标签在svg标签中绘制</span><br><span class="line"></span><br><span class="line">Echarts</span><br><span class="line">基于js的开源可视化图表库</span><br><span class="line">初始化echarts实例echarts.init（）</span><br><span class="line">图表的配置项与数据</span><br><span class="line">    echarts实例.setOption（&#123;</span><br><span class="line">    配置内容</span><br><span class="line">    title:&#123;</span><br><span class="line">        标题</span><br><span class="line">    &#125;</span><br><span class="line">    x轴</span><br><span class="line">    xAxis:&#123;</span><br><span class="line">        data:[]</span><br><span class="line">    &#125;，</span><br><span class="line">    y轴配置</span><br><span class="line">    yAxis:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    系列的设置，绘制什么样类型的图标、数据的展示再这里设置</span><br><span class="line">    series:[&#123;</span><br><span class="line">        name：图标名字</span><br><span class="line">        type：类型</span><br><span class="line">        	&#125;]</span><br><span class="line">    &#125;）</span><br></pre></td></tr></table></figure>
+
+
                       
 
                         
@@ -332,7 +606,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%9A%E5%9F%BA%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E7%9A%84%E7%94%B5%E5%95%86%E7%BD%91%E7%AB%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">第一个项目：基于Vue框架的电商网站的项目开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5%E5%B1%95%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">首页展示：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%AF%B7%E6%B1%82%E6%8E%A5%E5%8F%A3%E7%BB%9F%E4%B8%80%E5%B0%81%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">对请求接口统一封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81"><span class="toc-number">1.3.</span> <span class="toc-text">防抖节流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA-%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%E5%AE%9E%E7%8E%B0%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC"><span class="toc-number">1.4.</span> <span class="toc-text">编程式导航+事件委托实现路由跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE%E4%BD%BF%E7%94%A8swiper%E6%8F%92%E4%BB%B6%E6%9D%A5%E5%AE%8C%E6%88%90"><span class="toc-number">1.5.</span> <span class="toc-text">轮播图使用swiper插件来完成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF%E5%8F%98%E5%8C%96%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E6%90%9C%E7%B4%A2"><span class="toc-number">1.6.</span> <span class="toc-text">利用路由信息变化实现动态搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E5%93%81%E6%8E%92%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text">商品排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%86%99%E5%88%86%E9%A1%B5%E5%99%A8"><span class="toc-number">1.8.</span> <span class="toc-text">手写分页器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E4%B8%AD%E7%9A%84%E9%9A%BE%E7%82%B9%EF%BC%9A%E7%82%B9%E5%87%BB%E8%BD%AE%E6%92%AD%E5%9B%BE%E5%9B%BE%E7%89%87%E6%97%B6%EF%BC%8C%E6%94%B9%E5%8F%98%E6%94%BE%E5%A4%A7%E9%95%9C%E7%BB%84%E4%BB%B6%E5%B1%95%E7%A4%BA%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-number">1.9.</span> <span class="toc-text">商品详情中的难点：点击轮播图图片时，改变放大镜组件展示的图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B4%AD%E7%89%A9%E8%BD%A6"><span class="toc-number">1.10.</span> <span class="toc-text">添加购物车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E4%B8%9A%E5%8A%A1"><span class="toc-number">1.11.</span> <span class="toc-text">注册登录业务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E7%8B%AC%E4%BA%AB%E5%AE%88%E5%8D%AB"><span class="toc-number">1.12.</span> <span class="toc-text">路由独享守卫</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.13.</span> <span class="toc-text">图片懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.14.</span> <span class="toc-text">路由懒加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%9A%E5%9F%BA%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E5%92%8CElement-UI%E7%9A%84%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">第二个项目：基于Vue框架和Element-UI的后台管理系统项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%88%97%E8%A1%A8%E7%9A%84%E5%8A%A8%E6%80%81%E5%B1%95%E7%A4%BA"><span class="toc-number">2.1.</span> <span class="toc-text">三级列表的动态展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7%E5%92%8C%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.</span> <span class="toc-text">添加属性和修改属性的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spu%E7%AE%A1%E7%90%86%EF%BC%88%E6%A0%87%E5%87%86%E5%8C%96%E4%BA%A7%E5%93%81%E5%8D%95%E5%85%83%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">Spu管理（标准化产品单元）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sku%E7%AE%A1%E7%90%86%EF%BC%88%E5%BA%93%E5%AD%98%E9%87%8F%E5%8D%95%E4%BD%8D%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">Sku管理（库存量单位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA"><span class="toc-number">2.5.</span> <span class="toc-text">权限页面展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">2.6.</span> <span class="toc-text">数据可视化</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
